@@ -9,7 +9,7 @@
     "desableHibernate": true,
     "defaultDesktop": true,
     "defaultAppAssoc": true,
-    "deleteTaskbarUWPApps": false,
+    "deleteTaskbarUWPApps": true,
     "runUninstallApps": true,
     "upgradeWindows": true,
     "domain": {
