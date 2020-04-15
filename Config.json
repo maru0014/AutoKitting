@@ -1,0 +1,189 @@
+[
+  {
+    "pcname": "VM2020-001",
+    "joinDomain": true,
+    "enableAdministrator": true,
+    "enableRemoteDesktop": true,
+    "disableWinDefender": true,
+    "desableSleep": true,
+    "desableHibernate": true,
+    "defaultDesktop": true,
+    "defaultAppAssoc": true,
+    "deleteTaskbarUWPApps": false,
+    "runUninstallApps": true,
+    "upgradeWindows": true,
+    "domain": {
+      "name": "codelife",
+      "address": "codelife.cafe"
+    },
+    "bitLocker": {
+      "flag": true,
+      "password": "Setup1234",
+      "saveRecoveryPassInAD": true
+    },
+    "network": {
+      "desableSnp": true,
+      "disableIPv6": true,
+      "staticIP": {
+        "flag": false,
+        "address": "",
+        "gateway": "",
+        "prefixLength": 24
+      },
+      "dns": [
+        "192.168.1.47",
+        "192.168.1.1",
+        "8.8.8.8",
+        "8.8.4.4"
+      ],
+      "dnsSuffix": [
+        "dc.codelife.cafe"
+      ],
+      "drive": [
+        {
+          "name": "Z",
+          "path": "\\\\nas\\share",
+          "user": "su",
+          "pass": "Setup1234"
+        }
+      ]
+    },
+    "setupUser": {
+      "name": "setup",
+      "pass": "Setup1234",
+      "delete": true
+    },
+    "domainUser": {
+      "name": "joindomain",
+      "pass": "Welcome123",
+      "ouPath": "",
+      "localGroup": [
+        "Administrators"
+      ]
+    },
+    "localUser": {
+      "name": "",
+      "pass": "",
+      "dontExpirePassword": false,
+      "localGroup": []
+    },
+    "notifier": {
+      "chat": "slack",
+      "url": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX",
+      "slackUser": "Win10 Kitting Bot",
+      "cwToken": ""
+    },
+    "apps": [
+      {
+        "name": "Google Chrome",
+        "installerType": "msi",
+        "installerPath": "/Applications/googlechromestandaloneenterprise64.msi",
+        "argument": "",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Google日本語入力",
+        "installerType": "exe",
+        "installerPath": "/Applications/GoogleJapaneseInputSetup.exe",
+        "argument": "/silent /install",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files (x86)/Google/Google Japanese Input",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Google Drive File Stream",
+        "installerType": "exe",
+        "installerPath": "/Applications/GoogleDriveFSSetup.exe",
+        "argument": "--silent --desktop_shortcut --gsuite_shortcuts=false",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/Google/Drive File Stream",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Firefox",
+        "installerType": "msi",
+        "installerPath": "/Applications/Firefox Setup 73.0.1.msi",
+        "argument": "/quiet /norestart",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/Mozilla Firefox/firefox.exe",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Sakura Editor",
+        "installerType": "exe",
+        "installerPath": "/Applications/sakura_install2-2-0-1.exe",
+        "argument": "/SP- /VERYSILENT",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files (x86)/sakura",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Lhaplus",
+        "installerType": "exe",
+        "installerPath": "/Applications/lpls174.exe",
+        "argument": "/SILENT /NORESTART",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files (x86)/Lhaplus",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Adobe Acrobat Reader DC",
+        "installerType": "exe",
+        "installerPath": "/Applications/AcroRdrDC2000620034_ja_JP.exe",
+        "argument": "/sPB /rs /l",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files (x86)/Adobe/Acrobat Reader DC",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "PDF-XChange Viewer",
+        "installerType": "exe",
+        "installerPath": "/Applications/PDFXVwer.exe",
+        "argument": "/SP- /SILENT /norestart",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/Tracker Software",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "CubePDF",
+        "installerType": "exe",
+        "installerPath": "/Applications/cubepdf-1.0.1-x64.exe",
+        "argument": "/lang=japanese /verysilent /sp- /nocancel /norestart /suppressmsgboxes /nolaunch",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/CubePDF",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Slack",
+        "installerType": "msi",
+        "installerPath": "/Applications/SlackSetup.msi",
+        "argument": "",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/Slack Deployment",
+        "timeOut": 900,
+        "onlyOnce": false
+      },
+      {
+        "name": "Office 365",
+        "installerType": "exe",
+        "installerPath": "/Applications/O365/setup.exe",
+        "argument": "/configure installOfficeBusRet64.xml",
+        "workingDirectory": "/Applications/O365/",
+        "checkFilePath": "C:/Program Files/Microsoft Office",
+        "timeOut": 600,
+        "onlyOnce": false
+      }
+    ]
+  }
+]
