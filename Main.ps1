@@ -8,7 +8,6 @@ Write-Host @"
 * Windows10 Auto Kitting Script / Main.ps1
 * バージョン : 1.00
 * 最終更新日 : 2020/04/15
-* 作成者 　　: UG 丸本
 *
 "@ -ForeGroundColor green
 
