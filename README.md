@@ -49,13 +49,15 @@ PowerShell によって Windows10 のキッティングに必要な全工程を�
 
 ### Administrator のパスワードは事前に暗号化
 
-※Administrator を有効化する場合のみ必要
+Administrator を有効化する場合のみ必要　※あくまでも難読化のレベルです。
 
 1. Password フォルダ内「Run-Encryption.bat」を実行
 2. パスワード入力を求められるので入力
 3. 同フォルダ内に「encrypted.txt」「key.txt」が生成されたことを確認
 
 ![image](https://user-images.githubusercontent.com/15005576/77046926-2e295f00-6a07-11ea-822d-105de103a843.png)
+
+<br>
 
 ## Get-Files.bat の設定
 
@@ -65,6 +67,8 @@ PowerShell によって Windows10 のキッティングに必要な全工程を�
 ```bash
 set Source="\\NAS\share\AutoKitting"
 ```
+
+<br>
 
 ## Uninstall-Apps.ps1 の設定
 
@@ -87,6 +91,8 @@ Get-AppxPackage Microsoft.People | Remove-AppxPackage                        # P
 ...
 ```
 
+<br>
+
 ## AppAssoc.xml の設定
 
 既定のアプリ設定用ファイル
@@ -105,6 +111,8 @@ Get-AppxPackage Microsoft.People | Remove-AppxPackage                        # P
 </DefaultAssociations>
 
 ```
+
+<br>
 
 ## Config.json の設定
 
