@@ -163,6 +163,7 @@ foreach ($app in $config.apps) {
 
     # インストール完了を待機（タイムアウト設定時間に達したら待たずに進む）
     Wait-Process -InputObject $installing -Timeout $app.timeout
+    Start-Sleep -s 30
 
     # インストール完了をチェック
     if (Test-Path $app.checkFilePath) {
