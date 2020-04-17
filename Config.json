@@ -70,8 +70,7 @@
     "notifier": {
       "chat": "slack",
       "url": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX",
-      "slackUser": "Win10 Kitting Bot",
-      "cwToken": ""
+      "token": ""
     },
     "apps": [
       {

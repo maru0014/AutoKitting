@@ -182,25 +182,20 @@ function Run-WindowsUpdate() {
 ################################################
 # チャット送信
 ################################################
-function Send-Chat($msg, $chat, $url, $slackUser, $cwToken) {
+function Send-Chat($msg, $chat, $url, $token) {
     $enc = [System.Text.Encoding]::GetEncoding('ISO-8859-1')
     $utf8Bytes = [System.Text.Encoding]::UTF8.GetBytes($msg)
 
     if ($chat -eq "slack") {
-        $notificationPayload = @{
-            text     = $enc.GetString($utf8Bytes);
-            username = $user
-        }
+        $notificationPayload = @{text = $enc.GetString($utf8Bytes)}
         Invoke-RestMethod -Uri $url -Method Post -Body (ConvertTo-Json $notificationPayload)
     }
     elseif ($chat -eq "chatwork") {
         $body = $enc.GetString($utf8Bytes)
-        Invoke-RestMethod -Uri $url -Method POST -Headers @{"X-ChatWorkToken" = $cwToken } -Body "body=$body"
+        Invoke-RestMethod -Uri $url -Method POST -Headers @{"X-ChatWorkToken" = $token } -Body "body=$body"
     }
     elseif ($chat -eq "teams") {
-        $body = ConvertTo-JSON @{
-            text = $msg
-        }
+        $body = ConvertTo-JSON @{text = $msg}
         $postBody = [Text.Encoding]::UTF8.GetBytes($body)
         Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json' -Body $postBody
     }

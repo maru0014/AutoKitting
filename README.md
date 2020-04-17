@@ -185,8 +185,7 @@ PC 名、セットアップに利用するアカウント情報、ネットワ�
     "notifier": {
       "chat": "slack", //slack or teams or chatwork
       "url": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX", //Webhook URL
-      "slackUser": "Win10 Kitting Bot", //Slack 投稿ユーザ名
-      "cwToken": "" //ChatWork投稿用トークン
+      "token": "" //ChatWork投稿用トークン
     },
     "apps": [
       {

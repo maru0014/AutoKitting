@@ -171,7 +171,7 @@ foreach ($app in $config.apps) {
     }else{
       Write-Host "...失敗"
       # チャットでインストール失敗を通知
-      Send-Chat "[$($pcname)] $($app.name)のインストールに失敗しました" $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
+      Send-Chat "[$($pcname)] $($app.name)のインストールに失敗しました" $config.notifier.chat $config.notifier.url $config.notifier.token
     }
 
     # onlyOnce(1回だけ実行する) が true の場合は フラグファイルを作成する
@@ -285,7 +285,7 @@ if ($config.joinDomain -And ($config.domain.address -ne (Get-WmiObject Win32_Com
   }
   catch {
     # ドメイン参加失敗を通知
-    Send-Chat "[$($pcname)] ドメイン参加に失敗しました。Config.jsonを修正して再起動してください。$($result)" $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
+    Send-Chat "[$($pcname)] ドメイン参加に失敗しました。Config.jsonを修正して再起動してください。$($result)" $config.notifier.chat $config.notifier.url $config.notifier.token
     Write-Host "$(Date -Format g) ドメイン参加に失敗しました。Config.jsonを修正して再起動してください。"
     Pause
     Exit
@@ -392,7 +392,7 @@ if ($config.bitlocker.flag -And $EncryptedFlag) {
     # チャットでプロテクタIDと回復パスワードを通知
     $kpid = ((Get-BitLockerVolume -MountPoint "C:").keyProtector | Where-Object {$_.KeyProtectorType -eq 'RecoveryPassword'}).KeyProtectorId | Out-String
     $rp = ((Get-BitLockerVolume -MountPoint "C:").keyProtector | Where-Object {$_.KeyProtectorType -eq 'RecoveryPassword'}).RecoveryPassword | Out-String
-    Send-Chat "[$($pcname)] BitLocker`r`nプロテクタID： $($kpid)`r`n回復パスワード： $($rp)" $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
+    Send-Chat "[$($pcname)] BitLocker`r`nプロテクタID： $($kpid)`r`n回復パスワード： $($rp)" $config.notifier.chat $config.notifier.url $config.notifier.token
 
 }
 
@@ -443,7 +443,7 @@ MACアドレス： $($macAddress)
 "@
 
 # キッティング完了をチャットに通知
-Send-Chat $compliteMsg $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
+Send-Chat $compliteMsg $config.notifier.chat $config.notifier.url $config.notifier.token
 
 # ログ出力終了
 Stop-Transcript
