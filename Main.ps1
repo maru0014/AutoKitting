@@ -299,10 +299,13 @@ if ($config.joinDomain -And ($config.domain.address -ne (Get-WmiObject Win32_Com
         # Join-ADUser2Group $config.domain.name $config.domainUser.name $Group
       }
     }
-
-    Write-Host "$(Date -Format g) 再起動"
-    Restart-Computer -Force
-    Exit
+    # ドメインユーザを一時的にAdministratorsに追加
+    if (-Not(Test-MemberDomainAccunt $config.domain.name $userName "Administrators")) {
+      net localgroup "Administrators" "$($config.domain.name)\$($config.domainUser.name)" /ADD
+    }
+    # Write-Host "$(Date -Format g) 再起動"
+    # Restart-Computer -Force
+    # Exit
 
 }
 
@@ -396,6 +399,12 @@ if ($config.bitlocker.flag -And $EncryptedFlag) {
 
 }
 
+# ドメインユーザをAdministratorsから削除
+if (-Not ($config.domainUser.localGroup).Contains("Administrators")) {
+  if (-Not (Test-MemberDomainAccunt $config.domain.name $userName "Administrators")) {
+    net localgroup "Administrators" "$($config.domain.name)\$($config.domainUser.name)" /DELETE
+  }
+}
 
 if ($config.setupUser.delete) {
   Write-Host "`r`n**************** セットアップユーザの削除 ****************" -ForeGroundColor green
