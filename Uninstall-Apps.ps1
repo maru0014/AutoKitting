@@ -11,7 +11,7 @@ Get-AppxPackage Microsoft.MixedReality.Portal | Remove-AppxPackage           # M
 # Get-AppxPackage Microsoft.Office.OneNote | Remove-AppxPackage                # OneNote
 Get-AppxPackage Microsoft.People | Remove-AppxPackage                        # People
 Get-AppxPackage Microsoft.Print3D | Remove-AppxPackage                       # Print3D(1709à»ç~)
-# Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage                      # Skype
+Get-AppxPackage Microsoft.SkypeApp | Remove-AppxPackage                      # Skype
 Get-AppxPackage SpotifyAB.SpotifyMusic | Remove-AppxPackage                  # Spotify(1709à»ç~)
 Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage             # Xbox Game Bar(1809à»ç~)
 Get-AppxPackage Microsoft.Xbox.TCUI | Remove-AppxPackage                     # Xbox Live(1809à»ç~)

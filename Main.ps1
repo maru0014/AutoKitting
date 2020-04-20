@@ -6,8 +6,8 @@ Write-Host @"
 *********************************************************
 *
 * Windows10 Auto Kitting Script / Main.ps1
-* バージョン : 1.00
-* 最終更新日 : 2020/04/15
+* バージョン : 1.01
+* 最終更新日 : 2020/04/20
 *
 "@ -ForeGroundColor green
 
@@ -127,7 +127,7 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
 	if ($config.desableHibernate) {
 	  Write-Host "$(Date -Format g) 休止状態無効化"
 	  powercfg /x /hibernate-timeout-ac 0
-	}
+  }
 
 }
 

@@ -21,7 +21,7 @@ if NOT %ERRORLEVEL% EQU 0 (
 
 ) else (
 
-	echo 管理者権限で実行されていることを確認しました
+	echo 管理者権限で実行されていることを確認
 	echo キッティングに必要なファイルを取得します
 	mkdir C:\AutoKitting
 	cd C:\AutoKitting
@@ -31,7 +31,7 @@ if NOT %ERRORLEVEL% EQU 0 (
 
 	ROBOCOPY %Source% C:\AutoKitting /S /XO /R:2 /W:0
 
-	echo ファイルの取得を完了しました
+	echo ファイルの取得を完了
 	start C:\AutoKitting\Run-PS.bat
 
 )

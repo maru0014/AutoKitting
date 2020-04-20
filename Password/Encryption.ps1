@@ -4,7 +4,7 @@ $Password = Read-Host "暗号化するパスワードを入力" -AsSecureString
 #8*24で192bitのバイト配列を作成
 $EncryptedKey = New-Object Byte[] 24
 
-#RNGCryptoServiceProviderクラスをcreateしてGetBytesメソッドでバイト配列をランダムなデータで埋める。
+#RNGCryptoServiceProviderクラスをcreateしてGetBytesメソッドでバイト配列をランダムなデータで埋める
 [Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($EncryptedKey)
 
 #作成されたランダムな配列をエクスポート
