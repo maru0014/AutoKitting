@@ -19,15 +19,17 @@ PowerShell によって Windows10 のキッティングに必要な全工程を�
 - 不要なソフトウェアのアンインストール
 - アプリケーションの自動インストール
   - Office のインストール
-  - Google Chrome / Firefox のインストール
-  - Google 日本語入力 のインストール
-  - Sakura Editor のインストール
-  - Slack のインストール
-  - 7-Zip / Lhaplus のインストール
-  - Adobe Acrobat Reader / CubePDF / PDF X-Viewer のインストール
-  - Lanscope Cat MR のインストール
-  - Global Protect のインストール
-  - ESET Internet Security / Sophos Endpoint Protection のインストール
+  - Google Chrome / Firefox
+  - Google 日本語入力
+  - Sakura Editor
+  - Slack / Zoom
+  - 7-Zip / Lhaplus
+  - Adobe Acrobat Reader / CubePDF / CubeICE / Primo PDF / PDF X-Viewer
+  - Lanscope Cat MR
+  - FileMaker
+  - Global Protect
+  - VLC Media Player
+  - ESET Internet Security / Sophos Endpoint Protection
 - 設定用ユーザプロファイルのクリーンアップ
 - 設定用ファイルのクリーンアップ
 
@@ -183,7 +185,7 @@ PC 名、セットアップに利用するアカウント情報、ネットワ�
       "localGroup": [] //ユーザをローカルグループに追加（カンマ区切りで複数可）
     },
     "notifier": {
-      "chat": "slack", //slack or teams or chatwork
+      "chat": "slack", //slack / teams / chatwork / hangouts
       "url": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXX", //Webhook URL
       "token": "" //ChatWork投稿用トークン
     },

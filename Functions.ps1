@@ -198,6 +198,10 @@ function Send-Chat($msg, $chat, $url, $token) {
         $postBody = [Text.Encoding]::UTF8.GetBytes($body)
         Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json' -Body $postBody
     }
+    elseif ($chat -eq "hangouts") {
+        $notificationPayload = @{text = $msg}
+        Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json; charset=UTF-8' -Body (ConvertTo-Json $notificationPayload)
+    }
 }
 
 
