@@ -361,7 +361,7 @@ if ($config.bitlocker.flag -And $EncryptedFlag) {
 
   # 既存のKeyProtectorを削除
   foreach($KP in $BLV.KeyProtector){
-    if ($BLV.KeyProtectorType -eq "RecoveryPassword") {
+    if ($KP.KeyProtectorType -eq "RecoveryPassword") {
       Remove-BitLockerKeyProtector -MountPoint "C:" -KeyProtectorId $KP.KeyProtectorId
     }
   }
