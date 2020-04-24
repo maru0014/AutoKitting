@@ -164,12 +164,72 @@
         "onlyOnce": false
       },
       {
+        "name": "CubePDF",
+        "installerType": "exe",
+        "installerPath": "/Applications/cubepdf-1.0.1-x64.exe",
+        "argument": "/lang=japanese /verysilent /sp- /nocancel /norestart /suppressmsgboxes /nolaunch",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/CubePDF",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "CubeICE",
+        "installerType": "exe",
+        "installerPath": "/Applications/cubeice-0.9.1b.exe",
+        "argument": "/lang=japanese /verysilent /sp- /nocancel /norestart /suppressmsgboxes /nolaunch",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/CubeICE",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "PrimoPDF",
+        "installerType": "exe",
+        "installerPath": "/Applications/InternationalPrimoPDF.exe",
+        "argument": "/S",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files (x86)/Nitro PDF/PrimoPDF/",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
+        "name": "Zoom",
+        "installerType": "msi",
+        "installerPath": "/Applications/ZoomInstallerFull.msi",
+        "argument": "/quiet /qn /norestart",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Users/Public/Desktop/Zoom.lnk",
+        "timeOut": 300,
+        "onlyOnce": false
+      },
+      {
+        "name": "VLC media player",
+        "installerType": "msi",
+        "installerPath": "/Applications/vlc-3.0.8-win64.msi",
+        "argument": "/quiet /norestart",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/VideoLAN/VLC",
+        "timeOut": 600,
+        "onlyOnce": false
+      },
+      {
         "name": "Slack",
         "installerType": "msi",
         "installerPath": "/Applications/SlackSetup.msi",
         "argument": "",
         "workingDirectory": "/Applications",
         "checkFilePath": "C:/Program Files/Slack Deployment",
+        "timeOut": 900,
+        "onlyOnce": false
+      },
+      {
+        "name": "SQL Server Management Studio",
+        "installerType": "exe",
+        "installerPath": "/Applications/SSMS-Setup-JPN.exe",
+        "argument": "/install /quiet /passive /norestart",
+        "workingDirectory": "/Applications",
+        "checkFilePath": "C:/Program Files/Microsoft SQL Server",
         "timeOut": 900,
         "onlyOnce": false
       },
