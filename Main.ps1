@@ -1,52 +1,52 @@
 
-# ãƒ­ã‚°å‡ºåŠ›é–‹å§‹
+# ƒƒOo—ÍŠJn
 Start-Transcript "$PSScriptRoot/Kitting.log" -append
 
 Write-Host @"
 *********************************************************
 *
 * Windows10 Auto Kitting Script / Main.ps1
-* ãƒãƒ¼ã‚¸ãƒ§ãƒ³ : 1.02
-* æœ€çµ‚æ›´æ–°æ—¥ : 2020/04/24
+* ƒo[ƒWƒ‡ƒ“ : 1.02
+* ÅIXV“ú : 2020/04/24
 *
 "@ -ForeGroundColor green
 
-Write-Host "$(Date -Format g) å®Ÿè¡Œä¸­ã®ãƒ¦ãƒ¼ã‚¶ : " $env:USERNAME
+Write-Host "$(Date -Format g) Às’†‚Ìƒ†[ƒU : " $env:USERNAME
 
-# è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
-Write-Host "$(Date -Format g) è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ : $($PSScriptRoot)/Config.json"
+# İ’èƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+Write-Host "$(Date -Format g) İ’èƒtƒ@ƒCƒ‹“Ç‚İ‚İ : $($PSScriptRoot)/Config.json"
 $config = Get-Content "$PSScriptRoot/Config.json" -Encoding UTF8 | ConvertFrom-Json
 
-# é–¢æ•°ã®èª­ã¿è¾¼ã¿
-Write-Host "$(Date -Format g) é–¢æ•°ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿ : $($PSScriptRoot)/Functions.ps1"
+# ŠÖ”‚Ì“Ç‚İ‚İ
+Write-Host "$(Date -Format g) ŠÖ”ƒtƒ@ƒCƒ‹“Ç‚İ‚İ : $($PSScriptRoot)/Functions.ps1"
 . $PSScriptRoot/Functions.ps1
 
-# PCåå®šç¾©ï¼ˆGet-Files.batã«ã‚ˆã£ã¦PCåãŒè¨­å®šã•ã‚ŒãŸå ´åˆã¯C:/pcname.txtã®åå‰ã‚’ä½¿ç”¨ï¼‰
+# PC–¼’è‹`iGet-Files.bat‚É‚æ‚Á‚ÄPC–¼‚ªİ’è‚³‚ê‚½ê‡‚ÍC:/pcname.txt‚Ì–¼‘O‚ğg—pj
 if (Test-Path "C:/Config.json") {
-  $pcname = (Get-Content "$PSScriptRoot/Config.json" -Encoding UTF8 | ConvertFrom-Json).pcname
+  $pcname = (Get-Content "C:/Config.json" -Encoding UTF8 | ConvertFrom-Json).pcname
 }
 else {
   $pcname = $config.pcname
 }
 
 
-# è¨­å®šå€¤ã®æœ€çµ‚ç¢ºèª
-Write-Host "`r`n********************** è¨­å®šå€¤ç¢ºèª ***********************" -ForeGroundColor green
+# İ’è’l‚ÌÅIŠm”F
+Write-Host "`r`n********************** İ’è’lŠm”F ***********************" -ForeGroundColor green
 Write-Host @"
-ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿åã€€ã€€ã€€: $($pcname)
-ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãƒ¦ãƒ¼ã‚¶ã€€: $($config.setupuser.name)
-ãƒ‰ãƒ¡ã‚¤ãƒ³å‚åŠ ã€€ã€€ã€€ã€€: $($config.joinDomain)
-Administratoræœ‰åŠ¹åŒ– : $($config.enableAdministrator)
-BitLockeræœ‰åŠ¹åŒ– ã€€ã€€: $($config.bitLocker.flag)
-RDPæœ‰åŠ¹åŒ– ã€€ã€€ã€€ã€€ã€€: $($config.enableRemoteDesktop)
-Defenderç„¡åŠ¹åŒ–ã€€ã€€ã€€: $($config.disableWinDefender)
-ã‚¹ãƒªãƒ¼ãƒ—ç„¡åŠ¹åŒ–ã€€ã€€ã€€: $($config.desableSleep)
-ä¼‘æ­¢çŠ¶æ…‹ç„¡åŠ¹åŒ–ã€€ã€€ã€€: $($config.desableHibernate)
-IPã‚¢ãƒ‰ãƒ¬ã‚¹å›ºå®šã€€ã€€ã€€: $($config.network.staticIP.flag)
-SNPç„¡åŠ¹åŒ– ã€€ã€€ã€€ã€€ã€€: $($config.network.desableSnp)
-IPv6ç„¡åŠ¹åŒ–ã€€ã€€ã€€ã€€ã€€: $($config.network.disableIPv6)
+ƒRƒ“ƒsƒ…[ƒ^–¼@@@: $($pcname)
+ƒZƒbƒgƒAƒbƒvƒ†[ƒU@: $($config.setupuser.name)
+ƒhƒƒCƒ“Q‰Á@@@@: $($config.joinDomain)
+Administrator—LŒø‰» : $($config.enableAdministrator)
+BitLocker—LŒø‰» @@: $($config.bitLocker.flag)
+RDP—LŒø‰» @@@@@: $($config.enableRemoteDesktop)
+Defender–³Œø‰»@@@: $($config.disableWinDefender)
+ƒXƒŠ[ƒv–³Œø‰»@@@: $($config.desableSleep)
+‹x~ó‘Ô–³Œø‰»@@@: $($config.desableHibernate)
+IPƒAƒhƒŒƒXŒÅ’è@@@: $($config.network.staticIP.flag)
+SNP–³Œø‰» @@@@@: $($config.network.desableSnp)
+IPv6–³Œø‰»@@@@@: $($config.network.disableIPv6)
 
-ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ :
+ƒCƒ“ƒXƒg[ƒ‹‚·‚éƒAƒvƒŠƒP[ƒVƒ‡ƒ“ :
 "@ -ForeGroundColor Yellow
 
 foreach ($app in $config.apps) {
@@ -54,93 +54,95 @@ foreach ($app in $config.apps) {
 }
 
 
-Write-Host "`r`n******************* ã‚·ã‚¹ãƒ†ãƒ æƒ…å ±ã®å¤‰æ›´ *******************" -ForeGroundColor green
+Write-Host "`r`n******************* ƒVƒXƒeƒ€î•ñ‚Ì•ÏX *******************" -ForeGroundColor green
 
-# è‡ªå‹•ãƒ­ã‚°ã‚ªãƒ³æœªè¨­å®šã®å ´åˆã¯è¨­å®šã™ã‚‹
+# ©“®ƒƒOƒIƒ“–¢İ’è‚Ìê‡‚Íİ’è‚·‚é
 Enable-AutoLogon $config.setupuser.name $config.setupuser.pass
 
-# ã‚¿ã‚¹ã‚¯ãŒæœªç™»éŒ²ãªã‚‰ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã«ãƒ­ã‚°ã‚ªãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ç™»éŒ²
+# ƒ^ƒXƒN‚ª–¢“o˜^‚È‚çƒXƒPƒWƒ…[ƒ‰‚ÉƒƒOƒIƒ“ƒXƒNƒŠƒvƒg‚ğ“o˜^
 Register-Task "AutoKitting" "$PSScriptRoot\Run-PS.bat" $config.setupuser.name $config.setupuser.pass
 
-# ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿åãŒè¨­å®šå€¤ã¨ç•°ãªã‚‹å ´åˆã¯å¤‰æ›´
+# ƒRƒ“ƒsƒ…[ƒ^–¼‚ªİ’è’l‚ÆˆÙ‚È‚éê‡‚Í•ÏX
 if ($Env:COMPUTERNAME -ne $pcname) {
-  Write-Host "$(Date -Format g) ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿åã‚’å¤‰æ›´ã—ã¦å†èµ·å‹•ã—ã¾ã™"
+  Write-Host "$(Date -Format g) ƒRƒ“ƒsƒ…[ƒ^–¼‚ğ•ÏX‚µ‚ÄÄ‹N“®‚µ‚Ü‚·"
   Rename-Computer -NewName $pcname -Force -Restart
   Exit
 }
 else {
-  Write-Host "$(Date -Format g) ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿åã¯å¤‰æ›´æ¸ˆã¿ã§ã™" -ForeGroundColor yellow
-  Write-Host "$(Date -Format g) ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿å : " $Env:COMPUTERNAME -ForeGroundColor yellow
+  Write-Host "$(Date -Format g) ƒRƒ“ƒsƒ…[ƒ^–¼‚Í•ÏXÏ‚İ‚Å‚·" -ForeGroundColor yellow
+  Write-Host "$(Date -Format g) ƒRƒ“ƒsƒ…[ƒ^–¼ : " $Env:COMPUTERNAME -ForeGroundColor yellow
 }
 
 
-# 1åº¦ã ã‘å®Ÿè¡Œ
+# 1“x‚¾‚¯Às
 if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
 
 	New-Item "$PSScriptRoot/onlyOnce1"
 
-	# ãƒªãƒ¢ãƒ¼ãƒˆãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—æœ‰åŠ¹/ç„¡åŠ¹
+	# ƒŠƒ‚[ƒgƒfƒXƒNƒgƒbƒv—LŒø/–³Œø
 	$remoteDesktopStatus = Get-Registry "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" "fDenyTSConnections"
 	if ($config.enableRemoteDesktop -and ($remoteDesktopStatus -ne 0)) {
-	  Write-Host "$(Date -Format g) ãƒªãƒ¢ãƒ¼ãƒˆãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—æœ‰åŠ¹åŒ–"
+	  Write-Host "$(Date -Format g) ƒŠƒ‚[ƒgƒfƒXƒNƒgƒbƒv—LŒø‰»"
 	  Set-Registry "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" "fDenyTSConnections" "DWord" 0
 	}
-	elseif($remoteDesktopStatus -ne 1){
-	  Write-Host "$(Date -Format g) ãƒªãƒ¢ãƒ¼ãƒˆãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ç„¡åŠ¹åŒ–"
+	elseif(-Not($config.enableRemoteDesktop) -and $remoteDesktopStatus -ne 1){
+	  Write-Host "$(Date -Format g) ƒŠƒ‚[ƒgƒfƒXƒNƒgƒbƒv–³Œø‰»"
 	  Set-Registry "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" "fDenyTSConnections" "DWord" 1
 	}
 
-	# Windows Defenderç„¡åŠ¹åŒ–
+	# Windows Defender–³Œø‰»
 	$DefenderStatus = Get-Registry "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "DisableAntiSpyware"
 	if ($config.desableDefender -and ($DefenderStatus -ne 1)) {
-	  Write-Host "$(Date -Format g) Windows Defenderç„¡åŠ¹åŒ–"
+	  Write-Host "$(Date -Format g) Windows Defender–³Œø‰»"
 	  Set-Registry "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "DisableAntiSpyware" "DWord" 1
 	}
 
-	# SNPç„¡åŠ¹åŒ–
+	# SNP–³Œø‰»
 	((Get-NetTCPSetting).AutoTuningLevelLocal).Contains("Disabled")
 	if ($config.network.desableSnp) {
-	  Write-Host "$(Date -Format g) SNPç„¡åŠ¹åŒ–"
+	  Write-Host "$(Date -Format g) SNP–³Œø‰»"
 	  Set-NetTCPSetting -AutoTuningLevelLocal Disabled
 	}
 
-	# ã‚¹ãƒªãƒ¼ãƒ—ç„¡åŠ¹åŒ–
+	# ƒXƒŠ[ƒv–³Œø‰»
 	if ($config.desableSleep) {
-	  Write-Host "$(Date -Format g) ã‚¹ãƒªãƒ¼ãƒ—ç„¡åŠ¹åŒ–"
+	  Write-Host "$(Date -Format g) ƒXƒŠ[ƒv–³Œø‰»"
 	  powercfg /x /standby-timeout-ac 0
 	}
 
-	# ä¼‘æ­¢çŠ¶æ…‹ç„¡åŠ¹åŒ–
+	# ‹x~ó‘Ô–³Œø‰»
 	if ($config.desableHibernate) {
-	  Write-Host "$(Date -Format g) ä¼‘æ­¢çŠ¶æ…‹ç„¡åŠ¹åŒ–"
+	  Write-Host "$(Date -Format g) ‹x~ó‘Ô–³Œø‰»"
 	  powercfg /x /hibernate-timeout-ac 0
 	}
 
-  # # Windows Update ã‹ã‚‰ .NET Framework 3.5 ã®æ©Ÿèƒ½ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+  # # Windows Update ‚©‚ç .NET Framework 3.5 ‚Ì‹@”\ƒtƒ@ƒCƒ‹‚ğƒCƒ“ƒXƒg[ƒ‹
   # dism /online /Enable-Feature /FeatureName:NetFx3
 }
 
 if ($config.upgradeWindows) {
   $winver = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ReleaseId).ReleaseId
   if ($winver -ne "1909") {
-    # Win10 1909ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
-    Write-Host "$(Date -Format g) Windows10 $($winver) â†’ 1909ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰å®Ÿè¡Œ"
+    # Win10 1909‚ğƒCƒ“ƒXƒg[ƒ‹
+    Write-Host "$(Date -Format g) Windows10 $($winver) ¨ 1909ƒAƒbƒvƒOƒŒ[ƒhÀs"
     Start-Process -FilePath ($PSScriptRoot + "/Applications/1909/setup.exe") -argumentList "/Auto Upgrade" -Wait
   }
 }
 
-Write-Host "`r`n***************** æœ€æ–°ã¾ã§Windows Update *****************" -ForeGroundColor green
-Run-WindowsUpdate
+
+Write-Host "`r`n***************** ÅV‚Ü‚ÅWindows Update *****************" -ForeGroundColor green
+$WUresult = Run-WindowsUpdate
+Send-Chat "[$($pcname)] $($WUresult)" $config.notifier.chat $config.notifier.url $config.notifier.token
 
 
-Write-Host "`r`n************* ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ« *************" -ForeGroundColor green
+Write-Host "`r`n************* ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒXƒg[ƒ‹ *************" -ForeGroundColor green
 
-# Configã®appsä»¥ä¸‹é…åˆ—ã‚’é †ã«ãƒã‚§ãƒƒã‚¯ã—ã¦ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
+# Config‚ÌappsˆÈ‰º”z—ñ‚ğ‡‚Éƒ`ƒFƒbƒN‚µ‚ÄƒCƒ“ƒXƒg[ƒ‹
 foreach ($app in $config.apps) {
   if (-not(Test-Path $app.checkFilePath)) {
-    Write-Host "$(Date -Format g) $($app.name)ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«" -NoNewLine
+    Write-Host "$(Date -Format g) $($app.name)‚ğƒCƒ“ƒXƒg[ƒ‹" -NoNewLine
 
-    # å¼•æ•°ã‚ã‚Š/ãªã— ã§åˆ†å²ã—ã¦ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ©ã‚’å®Ÿè¡Œ
+    # ˆø”‚ ‚è/‚È‚µ ‚Å•ªŠò‚µ‚ÄƒCƒ“ƒXƒg[ƒ‰‚ğÀs
     if ($app.Argument -eq "") {
       $installing = Start-Process -FilePath ($PSScriptRoot + $app.installerPath) -WorkingDirectory ($PSScriptRoot + $app.workingDirectory) -PassThru
     }
@@ -148,70 +150,70 @@ foreach ($app in $config.apps) {
       $installing = Start-Process -FilePath ($PSScriptRoot + $app.installerPath) -argumentList $app.Argument -WorkingDirectory ($PSScriptRoot + $app.workingDirectory) -PassThru
     }
 
-    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†ã‚’å¾…æ©Ÿï¼ˆã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆè¨­å®šæ™‚é–“ã«é”ã—ãŸã‚‰å¾…ãŸãšã«é€²ã‚€ï¼‰
+    # ƒCƒ“ƒXƒg[ƒ‹Š®—¹‚ğ‘Ò‹@iƒ^ƒCƒ€ƒAƒEƒgİ’èŠÔ‚É’B‚µ‚½‚ç‘Ò‚½‚¸‚Éi‚Şj
     Wait-Process -InputObject $installing -Timeout $app.timeout
     Start-Sleep -s 30
 
-    # ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†ã‚’ãƒã‚§ãƒƒã‚¯
+    # ƒCƒ“ƒXƒg[ƒ‹Š®—¹‚ğƒ`ƒFƒbƒN
     if (Test-Path $app.checkFilePath) {
-      Write-Host "...å®Œäº†"
+      Write-Host "...Š®—¹"
     }else{
-      Write-Host "...å¤±æ•—"
-      # ãƒãƒ£ãƒƒãƒˆã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å¤±æ•—ã‚’é€šçŸ¥
-      Send-Chat "[$($config.pcname)] $($app.name)ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸ" $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
+      Write-Host "...¸”s"
+      # ƒ`ƒƒƒbƒg‚ÅƒCƒ“ƒXƒg[ƒ‹¸”s‚ğ’Ê’m
+      Send-Chat "[$($pcname)] $($app.name)‚ÌƒCƒ“ƒXƒg[ƒ‹‚É¸”s‚µ‚Ü‚µ‚½" $config.notifier.chat $config.notifier.url $config.notifier.token
     }
 
-    # onlyOnce(1å›ã ã‘å®Ÿè¡Œã™ã‚‹) ãŒ true ã®å ´åˆã¯ ãƒ•ãƒ©ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹
-    # 2å›ç›®ä»¥é™ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ãŸã‚ã«ã¯Config.jsonã®checkFilePathã‚’ãƒ•ãƒ©ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰ã«ã™ã‚‹å¿…è¦ã‚ã‚Š
+    # onlyOnce(1‰ñ‚¾‚¯Às‚·‚é) ‚ª true ‚Ìê‡‚Í ƒtƒ‰ƒOƒtƒ@ƒCƒ‹‚ğì¬‚·‚é
+    # 2‰ñ–ÚˆÈ~‚ğƒXƒLƒbƒv‚·‚é‚½‚ß‚É‚ÍConfig.json‚ÌcheckFilePath‚ğƒtƒ‰ƒOƒtƒ@ƒCƒ‹‚Ì–¼‘O‚É‚·‚é•K—v‚ ‚è
     if (($app.onlyOnce) -And (-Not (Test-Path "$PSScriptRoot/$($app.name)"))) {
       New-Item "$PSScriptRoot/$($app.name)"
     }
   } else {
-    Write-Host "$(Date -Format g) $($app.name)ã¯ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«æ¸ˆã¿ã§ã™"
+    Write-Host "$(Date -Format g) $($app.name)‚ÍƒCƒ“ƒXƒg[ƒ‹Ï‚İ‚Å‚·"
   }
 }
 
 
-# 1åº¦ã ã‘å®Ÿè¡Œ
+# 1“x‚¾‚¯Às
 if (-Not (Test-Path "$PSScriptRoot/onlyOnce2")) {
 
 	New-Item "$PSScriptRoot/onlyOnce2"
 
 	if ($config.defaultDesktop) {
-		Write-Host "`r`n*********** Defaultãƒ¦ãƒ¼ã‚¶ã®ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã‚’è¨­å®š ************" -ForeGroundColor green
+		Write-Host "`r`n*********** Defaultƒ†[ƒU‚ÌƒfƒXƒNƒgƒbƒv‚ğİ’è ************" -ForeGroundColor green
 		cmd /C xcopy "$($PSScriptRoot)\Desktop" "C:\Users\Default\Desktop\" /D /Y /E
 	}
 
 	if ($config.defaultAppAssoc) {
-		Write-Host "`r`n****************** æ—¢å®šã®ã‚¢ãƒ—ãƒªã‚’è¨­å®š *******************" -ForeGroundColor green
+		Write-Host "`r`n****************** Šù’è‚ÌƒAƒvƒŠ‚ğİ’è *******************" -ForeGroundColor green
 		Dism.exe /Online /Import-DefaultAppAssociations:$PSScriptRoot\AppAssoc.xml
 	}
 
 
-	Write-Host "`r`n******************** ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯è¨­å®š ********************" -ForeGroundColor green
+	Write-Host "`r`n******************** ƒlƒbƒgƒ[ƒNİ’è ********************" -ForeGroundColor green
 
-	# å›ºå®šIPã‚¢ãƒ‰ãƒ¬ã‚¹
+	# ŒÅ’èIPƒAƒhƒŒƒX
 	if ($config.network.staticIP.flag) {
-	  Write-Host "$(Date -Format g) å›ºå®šIPã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®š"
+	  Write-Host "$(Date -Format g) ŒÅ’èIPƒAƒhƒŒƒX‚ğİ’è"
 	  Get-NetAdapter | New-NetIPAddress -AddressFamily IPv4 -IPAddress $config.network.staticIP.address -PrefixLength $config.network.staticIP.prefixLength -DefaultGateway $config.network.staticIP.gateway
 	}
 
-	# IPv6ç„¡åŠ¹åŒ–
+	# IPv6–³Œø‰»
 	if ($config.network.disableIPv6) {
-	  Write-Host "$(Date -Format g) IPv6ã‚’ç„¡åŠ¹åŒ–"
+	  Write-Host "$(Date -Format g) IPv6‚ğ–³Œø‰»"
 	  Get-NetAdapter | Disable-NetAdapterBinding -ComponentID ms_tcpip6
 	  Get-NetAdapter | Get-NetAdapterBinding -ComponentID ms_tcpip6
 	}
 
-	# DNSè¨­å®š
+	# DNSİ’è
 	if ($config.network.dns -ne "") {
-	  Write-Host "$(Date -Format g) DNSè¨­å®š"
+	  Write-Host "$(Date -Format g) DNSİ’è"
 	  Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses $config.network.dns
 	}
 
-	# DNSã‚µãƒ•ã‚£ãƒƒã‚¯ã‚¹è¨­å®š
+	# DNSƒTƒtƒBƒbƒNƒXİ’è
 	if ($config.network.dnsSuffix.Count -gt 0) {
-	  Write-Host "$(Date -Format g) DNSã‚µãƒ•ã‚£ãƒƒã‚¯ã‚¹è¨­å®š"
+	  Write-Host "$(Date -Format g) DNSƒTƒtƒBƒbƒNƒXİ’è"
 	  $suffixlist = $adapter.DNSDomainSuffix.SearchOrder
 	  if ($suffix -eq "") {
 	    $suffixlist = $config.network.dnsSuffix
@@ -221,33 +223,33 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce2")) {
 	  }
 	  Invoke-WmiMethod -class win32_networkadapterconfiguration -Name SetDNSSuffixSearchOrder -ArgumentList @($suffixlist) , $null
 	}
-	# æœ‰åŠ¹ãªã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã”ã¨ã®è¨­å®šå€¤ã‚’å‡ºåŠ›
+	# —LŒø‚ÈƒAƒ_ƒvƒ^[‚²‚Æ‚Ìİ’è’l‚ğo—Í
   Get-WmiObject Win32_NetworkAdapterConfiguration -filter "ipenabled = 'true'"
 
 
-  # ä¸è¦ãªã‚¢ãƒ—ãƒªã®å‰Šé™¤
+  # •s—v‚ÈƒAƒvƒŠ‚Ìíœ
 	if ($config.runUninstallApps) {
-		Write-Host "`r`n******** ä¸è¦ãªã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ« ********" -ForeGroundColor green
+		Write-Host "`r`n******** •s—v‚ÈƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ ********" -ForeGroundColor green
 		. $PSScriptRoot\Uninstall-Apps.ps1
 	}
 }
 
 
-# Administrator æœ‰åŠ¹åŒ–
+# Administrator —LŒø‰»
 if ($config.enableAdministrator -and (-Not(Get-LocalUser Administrator).Enabled)) {
 
-  Write-Host "`r`n******************** Administratorè¨­å®š ********************" -ForeGroundColor green
+  Write-Host "`r`n******************** Administratorİ’è ********************" -ForeGroundColor green
   $Password = Decryption-Password "$($PSScriptRoot)/Password/key.txt" "$($PSScriptRoot)/Password/encrypted.txt"
   cmd /C net user administrator $StringPassword /active:yes
 
 }
 
 
-# ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¦ãƒ¼ã‚¶ãŒè¨­å®šã•ã‚Œã¦ã„ã¦ã€å­˜åœ¨ã—ãªã„å ´åˆä½œæˆ
+# ƒ[ƒJƒ‹ƒ†[ƒU‚ªİ’è‚³‚ê‚Ä‚¢‚ÄA‘¶İ‚µ‚È‚¢ê‡ì¬
 if(($config.localUser.name -ne "") -And (-not(Test-User $config.localUser.name))) {
 
-  Write-Host "`r`n*************** åˆ©ç”¨è€…ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¦ãƒ¼ã‚¶ã®ä½œæˆ ***************" -ForeGroundColor green
-  # ãƒ¦ãƒ¼ã‚¶ä½œæˆ
+  Write-Host "`r`n*************** —˜—pÒƒ[ƒJƒ‹ƒ†[ƒU‚Ìì¬ ***************" -ForeGroundColor green
+  # ƒ†[ƒUì¬
   if ($config.localUser.pass -eq "****") {
     $localUserPass = Decryption-Password "$($PSScriptRoot)/Password/key-01.txt" "$($PSScriptRoot)/Password/encrypted-01.txt"
   }else {
@@ -255,23 +257,23 @@ if(($config.localUser.name -ne "") -And (-not(Test-User $config.localUser.name))
   }
   Create-User $config.localUser.name $localUserPass
 
-  # ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ç„¡æœŸé™è¨­å®š
+  # ƒpƒXƒ[ƒh–³ŠúŒÀİ’è
   if ($config.localUser.dontExpirePassword) {
     DontExpire-Password $config.localUser.name
   }
 
-  # ãƒ­ãƒ¼ã‚«ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã«è¿½åŠ 
+  # ƒ[ƒJƒ‹ƒOƒ‹[ƒv‚É’Ç‰Á
   foreach ($Group in $config.localUser.localGroup) {
-    Write-Host "$(Date -Format g) ãƒ¦ãƒ¼ã‚¶ãƒ¼$($config.localUser.name) ã‚’ãƒ­ãƒ¼ã‚«ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã«è¿½åŠ $($Group)"
+    Write-Host "$(Date -Format g) ƒ†[ƒU[$($config.localUser.name) ‚ğƒ[ƒJƒ‹ƒOƒ‹[ƒv‚É’Ç‰Á$($Group)"
     Add-LocalGroupMember -Group $Group -Member $config.localUser.name
   }
 }
 
 
-# ãƒ‰ãƒ¡ã‚¤ãƒ³å‚åŠ :true & ãƒ‰ãƒ¡ã‚¤ãƒ³æœªå‚åŠ  ã®å ´åˆã¯å®Ÿè¡Œ
+# ƒhƒƒCƒ“Q‰Á:true & ƒhƒƒCƒ“–¢Q‰Á ‚Ìê‡‚ÍÀs
 if ($config.joinDomain -And ($config.domain.address -ne (Get-WmiObject Win32_ComputerSystem).domain) ) {
 
-  Write-Host "`r`n*************** åˆ©ç”¨è€…ãƒ¦ãƒ¼ã‚¶ã§ãƒ‰ãƒ¡ã‚¤ãƒ³å‚åŠ  ***************" -ForeGroundColor green
+  Write-Host "`r`n*************** —˜—pÒƒ†[ƒU‚ÅƒhƒƒCƒ“Q‰Á ***************" -ForeGroundColor green
   try {
     if ($config.domainUser.pass -eq "****") {
       $domainUserPass = Decryption-Password "$($PSScriptRoot)/Password/key-02.txt" "$($PSScriptRoot)/Password/encrypted-02.txt"
@@ -281,39 +283,39 @@ if ($config.joinDomain -And ($config.domain.address -ne (Get-WmiObject Win32_Com
     $result = Join-Domain $config.domain.name $config.domainUser.name $domainUserPass $config.domainUser.ouPath
   }
   catch {
-    # ãƒ‰ãƒ¡ã‚¤ãƒ³å‚åŠ å¤±æ•—ã‚’é€šçŸ¥
-    Send-Chat "[$($config.pcname)] ãƒ‰ãƒ¡ã‚¤ãƒ³å‚åŠ ã«å¤±æ•—ã—ã¾ã—ãŸã€‚Config.jsonã‚’ä¿®æ­£ã—ã¦å†èµ·å‹•ã—ã¦ãã ã•ã„ã€‚$($result)" $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
-    Write-Host "$(Date -Format g) ãƒ‰ãƒ¡ã‚¤ãƒ³å‚åŠ ã«å¤±æ•—ã—ã¾ã—ãŸã€‚Config.jsonã‚’ä¿®æ­£ã—ã¦å†èµ·å‹•ã—ã¦ãã ã•ã„ã€‚"
+    # ƒhƒƒCƒ“Q‰Á¸”s‚ğ’Ê’m
+    Send-Chat "[$($pcname)] ƒhƒƒCƒ“Q‰Á‚É¸”s‚µ‚Ü‚µ‚½BConfig.json‚ğC³‚µ‚ÄÄ‹N“®‚µ‚Ä‚­‚¾‚³‚¢B$($result)" $config.notifier.chat $config.notifier.url $config.notifier.token
+    Write-Host "$(Date -Format g) ƒhƒƒCƒ“Q‰Á‚É¸”s‚µ‚Ü‚µ‚½BConfig.json‚ğC³‚µ‚ÄÄ‹N“®‚µ‚Ä‚­‚¾‚³‚¢B"
     Pause
     Exit
   }
-    # åˆ©ç”¨è€…ãƒ¦ãƒ¼ã‚¶ã‚’ãƒ­ãƒ¼ã‚«ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã«è¿½åŠ 
+    # —˜—pÒƒ†[ƒU‚ğƒ[ƒJƒ‹ƒOƒ‹[ƒv‚É’Ç‰Á
     foreach ($Group in $config.domainUser.localGroup) {
-      Write-Host "`r`n************** åˆ©ç”¨è€…ãƒ¦ãƒ¼ã‚¶ã‚’ã‚°ãƒ«ãƒ¼ãƒ—ã«è¿½åŠ  **************" -ForeGroundColor green
+      Write-Host "`r`n************** —˜—pÒƒ†[ƒU‚ğƒOƒ‹[ƒv‚É’Ç‰Á **************" -ForeGroundColor green
       if (-Not(Test-MemberDomainAccunt $config.domain.name $config.domainUser.name $Group)) {
-        Write-Host "$(Date -Format g) ãƒ¦ãƒ¼ã‚¶ãƒ¼$($config.domainUser.name)ã‚’ãƒ­ãƒ¼ã‚«ãƒ«ã‚°ãƒ«ãƒ¼ãƒ—ã«è¿½åŠ $($Group)"
+        Write-Host "$(Date -Format g) ƒ†[ƒU[$($config.domainUser.name)‚ğƒ[ƒJƒ‹ƒOƒ‹[ƒv‚É’Ç‰Á$($Group)"
         net localgroup $Group "$($config.domain.name)\$($config.domainUser.name)" /ADD
         # Join-ADUser2Group $config.domain.name $config.domainUser.name $Group
       }
     }
-    # ãƒ‰ãƒ¡ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ã‚’ä¸€æ™‚çš„ã«Administratorsã«è¿½åŠ 
+    # ƒhƒƒCƒ“ƒ†[ƒU‚ğˆê“I‚ÉAdministrators‚É’Ç‰Á
     if (-Not(Test-MemberDomainAccunt $config.domain.name $userName "Administrators")) {
       net localgroup "Administrators" "$($config.domain.name)\$($config.domainUser.name)" /ADD
     }
-    # Write-Host "$(Date -Format g) å†èµ·å‹•"
+    # Write-Host "$(Date -Format g) Ä‹N“®"
     # Restart-Computer -Force
     # Exit
 
 }
 
 
-# ä½œæˆã—ãŸãƒ¦ãƒ¼ã‚¶ã§è‡ªå‹•ãƒ­ã‚°ã‚ªãƒ³è¨­å®š
+# ì¬‚µ‚½ƒ†[ƒU‚Å©“®ƒƒOƒIƒ“İ’è
 if ($env:USERNAME -eq $config.setupuser.name) {
-  Write-Host "`r`n************* åˆ©ç”¨è€…ãƒ¦ãƒ¼ã‚¶ã§è‡ªå‹•ãƒ­ã‚°ã‚ªãƒ³è¨­å®š *************" -ForeGroundColor green
-  Write-Host "$(Date -Format g) ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãƒ¦ãƒ¼ã‚¶ã®ãƒ­ã‚°ã‚ªãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’è§£é™¤"
+  Write-Host "`r`n************* —˜—pÒƒ†[ƒU‚Å©“®ƒƒOƒIƒ“İ’è *************" -ForeGroundColor green
+  Write-Host "$(Date -Format g) ƒZƒbƒgƒAƒbƒvƒ†[ƒU‚ÌƒƒOƒIƒ“ƒXƒNƒŠƒvƒg‚ğ‰ğœ"
   Remove-Task "AutoKitting"
 
-  Write-Host "$(Date -Format g) åˆ©ç”¨è€…ãƒ¦ãƒ¼ã‚¶ã®ãƒ­ã‚°ã‚ªãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’è¨­å®š"
+  Write-Host "$(Date -Format g) —˜—pÒƒ†[ƒU‚ÌƒƒOƒIƒ“ƒXƒNƒŠƒvƒg‚ğİ’è"
   if ($config.joinDomain) {
     if ($config.domainUser.pass -eq "****") {
       $domainUserPass = Decryption-Password "$($PSScriptRoot)/Password/key-02.txt" "$($PSScriptRoot)/Password/encrypted-02.txt"
@@ -333,33 +335,33 @@ if ($env:USERNAME -eq $config.setupuser.name) {
     Register-Task "AutoKitting" "$PSScriptRoot\Run-PS.bat" $config.localUser.name $localUserPass
   }
 
-  Write-Host "$(Date -Format g) å†èµ·å‹•"
+  Write-Host "$(Date -Format g) Ä‹N“®"
   Restart-Computer -Force
   Exit
 }
 
 
 if ($config.deleteTaskbarUWPApps) {
-  Write-Host "`r`n******** ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã® Edge/Store/ãƒ¡ãƒ¼ãƒ« ã‚’å‰Šé™¤ ********" -ForeGroundColor green
-  # ã‚¿ã‚¹ã‚¯ãƒãƒ¼ã® Edge/Store/ãƒ¡ãƒ¼ãƒ« ã‚’å‰Šé™¤
+  Write-Host "`r`n******** ƒ^ƒXƒNƒo[‚Ì Edge/Store/ƒ[ƒ‹ ‚ğíœ ********" -ForeGroundColor green
+  # ƒ^ƒXƒNƒo[‚Ì Edge/Store/ƒ[ƒ‹ ‚ğíœ
   . $PSScriptRoot\Delete-TaskbarUWPApps.ps1
 }
 
 if ($config.network.drive -ne "") {
-    Write-Host "`r`n************* ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒ‰ãƒ©ã‚¤ãƒ–ã®å‰²ã‚Šå½“ã¦ *************" -ForeGroundColor green
+    Write-Host "`r`n************* ƒlƒbƒgƒ[ƒNƒhƒ‰ƒCƒu‚ÌŠ„‚è“–‚Ä *************" -ForeGroundColor green
     foreach ($drive in $config.network.drive) {
       Add-NetworkDrive $drive.name $drive.path $drive.user $drive.pass
     }
 }
 
-# BitLockerã‚’æœ‰åŠ¹åŒ–ã™ã‚‹è¨­å®šã‹ã¤æš—å·åŒ–ã•ã‚Œã¦ã„ãªã„å ´åˆã¯å®Ÿè¡Œ
+# BitLocker‚ğ—LŒø‰»‚·‚éİ’è‚©‚ÂˆÃ†‰»‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍÀs
 $BLV = Get-BitLockerVolume -MountPoint "C:"
 $EncryptedFlag = $BLV.ProtectionStatus -eq "off"
 
 if ($config.bitlocker.flag -And $EncryptedFlag) {
-  Write-Host "`r`n******************** Bitlockerã®æœ‰åŠ¹åŒ– ********************" -ForeGroundColor green
+  Write-Host "`r`n******************** Bitlocker‚Ì—LŒø‰» ********************" -ForeGroundColor green
 
-  # æ—¢å­˜ã®KeyProtectorã‚’å‰Šé™¤
+  # Šù‘¶‚ÌKeyProtector‚ğíœ
   foreach($KP in $BLV.KeyProtector){
     if ($KP.KeyProtectorType -eq "RecoveryPassword") {
       Remove-BitLockerKeyProtector -MountPoint "C:" -KeyProtectorId $KP.KeyProtectorId
@@ -367,46 +369,47 @@ if ($config.bitlocker.flag -And $EncryptedFlag) {
   }
 
   if ($config.bitLocker.saveRecoveryPassInAD) {
-    # ADã¸ã®å›å¾©ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ä¿å­˜ã‚’æœ‰åŠ¹åŒ–
+    # AD‚Ö‚Ì‰ñ•œƒpƒXƒ[ƒh•Û‘¶‚ğ—LŒø‰»
     Enable-SaveRecoveryPassInAD
 
-    # å›å¾©ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’è¨­å®š
+    # ‰ñ•œƒpƒXƒ[ƒh‚ğİ’è
     Add-BitLockerKeyProtector -MountPoint "C:" -RecoveryPasswordProtector
     $kpid = ((Get-BitLockerVolume -MountPoint "C:").keyProtector | Where-Object {$_.KeyProtectorType -eq 'RecoveryPassword'}).KeyProtectorId
 
-    # ADã«å›å¾©ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ä¿å­˜
+    # AD‚É‰ñ•œƒpƒXƒ[ƒh‚ğ•Û‘¶
     Backup-BitLockerKeyProtector -MountPoint "C:" -KeyProtectorId $kpid
   }
 
-  # Passwordè¨­å®šãŒæœ‰åŠ¹ å ´åˆã¯å®Ÿè¡Œ
-  if ($config.bitLocker.password ) {
-    # ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—æ™‚ æ‹¡å¼µPINã«ã‚ˆã‚‹èªè¨¼ã‚’è¨­å®š
+  # Passwordİ’è‚ª—LŒø ê‡‚ÍÀs
+  if ($config.bitLocker.password -ne "") {
+    # ƒXƒ^[ƒgƒAƒbƒv Šg’£PIN‚É‚æ‚é”FØ‚ğİ’è
     Enable-StartupPin
 
-    # ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’SecureStringã«å¤‰æ›
+    # ƒpƒXƒ[ƒh‚ğSecureString‚É•ÏŠ·
     $bitLockerPass = ConvertTo-SecureString $config.bitLocker.password -AsPlainText -Force
 
     if ((Get-Tpm).TpmPresent) {
-      # æ‹¡å¼µPINã‚’è¨­å®šã—ã¦BitLockerã‚’æœ‰åŠ¹åŒ–
+      # Šg’£PIN‚ğİ’è‚µ‚ÄBitLocker‚ğ—LŒø‰»
       Enable-BitLocker -MountPoint "C:" -TpmAndPinProtector $bitLockerPass -UsedSpaceOnly -skiphardwaretest
     }
     else {
-      # æœ‰åŠ¹ãªTPMãŒãªã„å ´åˆã¯PasswordProtectorã§æœ‰åŠ¹åŒ–
+      # —LŒø‚ÈTPM‚ª‚È‚¢ê‡‚ÍPasswordProtector‚Å—LŒø‰»
       Enable-BitLocker -MountPoint "C:" -PasswordProtector $bitLockerPass -UsedSpaceOnly -skiphardwaretest
     }
 
   }else{
-    manage-bde -on C:
+    # ƒXƒ^[ƒgƒAƒbƒv‚ÌPIN“ü—Í‚È‚µ‚Å—LŒø‰»
+    manage-bde -on C: -skiphardwaretest
   }
 
-    # ãƒãƒ£ãƒƒãƒˆã§ãƒ—ãƒ­ãƒ†ã‚¯ã‚¿IDã¨å›å¾©ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’é€šçŸ¥
+    # ƒ`ƒƒƒbƒg‚ÅƒvƒƒeƒNƒ^ID‚Æ‰ñ•œƒpƒXƒ[ƒh‚ğ’Ê’m
     $kpid = ((Get-BitLockerVolume -MountPoint "C:").keyProtector | Where-Object {$_.KeyProtectorType -eq 'RecoveryPassword'}).KeyProtectorId | Out-String
     $rp = ((Get-BitLockerVolume -MountPoint "C:").keyProtector | Where-Object {$_.KeyProtectorType -eq 'RecoveryPassword'}).RecoveryPassword | Out-String
-    Send-Chat "[$($config.pcname)] BitLocker`r`nãƒ—ãƒ­ãƒ†ã‚¯ã‚¿IDï¼š $($kpid)`r`nå›å¾©ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ï¼š $($rp)" $config.notifier.chat $config.notifier.url $config.notifier.slackUser $config.notifier.cwToken
+    Send-Chat "[$($pcname)] BitLocker`r`nƒvƒƒeƒNƒ^IDF $($kpid)`r`n‰ñ•œƒpƒXƒ[ƒhF $($rp)" $config.notifier.chat $config.notifier.url $config.notifier.token
 
 }
 
-# ãƒ‰ãƒ¡ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ã‚’Administratorsã‹ã‚‰å‰Šé™¤
+# ƒhƒƒCƒ“ƒ†[ƒU‚ğAdministrators‚©‚çíœ
 if (-Not ($config.domainUser.localGroup).Contains("Administrators")) {
   if (-Not (Test-MemberDomainAccunt $config.domain.name $userName "Administrators")) {
     net localgroup "Administrators" "$($config.domain.name)\$($config.domainUser.name)" /DELETE
@@ -414,29 +417,29 @@ if (-Not ($config.domainUser.localGroup).Contains("Administrators")) {
 }
 
 if ($config.setupUser.delete) {
-  Write-Host "`r`n**************** ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãƒ¦ãƒ¼ã‚¶ã®å‰Šé™¤ ****************" -ForeGroundColor green
+  Write-Host "`r`n**************** ƒZƒbƒgƒAƒbƒvƒ†[ƒU‚Ìíœ ****************" -ForeGroundColor green
 
-  # ãƒ¦ãƒ¼ã‚¶å‰Šé™¤
-  Write-Host "$(Date -Format g) $($config.setupuser.name)ã‚’å‰Šé™¤"
+  # ƒ†[ƒUíœ
+  Write-Host "$(Date -Format g) $($config.setupuser.name)‚ğíœ"
   Remove-LocalUser -Name $config.setupuser.name
 
-  # ãƒ¦ãƒ¼ã‚¶ãƒ—ãƒ­ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
+  # ƒ†[ƒUƒvƒƒtƒ@ƒCƒ‹íœ
   $GetUserQuery = 'select * from win32_userprofile where LocalPath="C:\\Users\\' + $config.setupuser.name + '"'
   Get-WmiObject -Query $GetUserQuery | Remove-WmiObject
 }
 
-# Taskã‚’å‰Šé™¤
+# Task‚ğíœ
 if (Test-Task "AutoKitting") {
   Remove-Task "AutoKitting"
-  Write-Host "$(Date -Format g) ãƒ­ã‚°ã‚ªãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’è§£é™¤"
+  Write-Host "$(Date -Format g) ƒƒOƒIƒ“ƒXƒNƒŠƒvƒg‚ğ‰ğœ"
 }
 
-# è‡ªå‹•ãƒ­ã‚°ã‚ªãƒ³ç„¡åŠ¹åŒ–
+# ©“®ƒƒOƒIƒ“–³Œø‰»
 Disable-AutoLogon
 
-# kitting.log ä»¥å¤–ã® AutoKittingãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã‚’å‰Šé™¤
+# kitting.log ˆÈŠO‚Ì AutoKittingƒtƒHƒ‹ƒ_”z‰º‚ğíœ
 Remove-Item C:\AutoKitting\* -Exclude kitting.log -Recurse
-Write-Host "$(Date -Format g) C:\AutoKitting\ãƒ•ã‚©ãƒ«ãƒ€ã‚’å‰Šé™¤"
+Write-Host "$(Date -Format g) C:\AutoKitting\ƒtƒHƒ‹ƒ_‚ğíœ"
 if (Test-Path "C:\Get-Files.bat") {
   Remove-Item "C:\Get-Files.bat" -Recurse
 }
@@ -444,22 +447,24 @@ if (Test-Path "C:\Config.json") {
   Remove-Item "C:\Config.json" -Recurse
 }
 
+# kitting.log ‚ğŠJ‚­
+Invoke-Item "C:\AutoKitting\kitting.log"
 
-# ã‚·ãƒªã‚¢ãƒ«å–å¾—
+# ƒVƒŠƒAƒ‹æ“¾
 $serialNo = (Get-WmiObject Win32_ComputerSystemProduct).IdentifyingNumber | Out-String
 
-# MACã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—
+# MACƒAƒhƒŒƒXæ“¾
 $macAddress =  Get-NetAdapter | ForEach-Object{"`r`n$($_.Name) : $($_.MacAddress)"}
 
 $compliteMsg = @"
-[$($config.pcname)] ã‚­ãƒƒãƒ†ã‚£ãƒ³ã‚°å®Œäº†ï¼
-ã‚·ãƒªã‚¢ãƒ«ç•ªå·ï¼š $($serialNo)
-MACã‚¢ãƒ‰ãƒ¬ã‚¹ï¼š $($macAddress)
-è©³ç´°ãƒ­ã‚°ã¯å¯¾è±¡PCã® C:\AutoKitting\Kitting.log ã‚’ã”ç¢ºèªãã ã•ã„
+[$($pcname)] ƒLƒbƒeƒBƒ“ƒOŠ®—¹I
+ƒVƒŠƒAƒ‹”Ô†F $($serialNo)
+MACƒAƒhƒŒƒXF $($macAddress)
+Ú×ƒƒO‚Í‘ÎÛPC‚Ì C:\AutoKitting\Kitting.log ‚ğ‚²Šm”F‚­‚¾‚³‚¢
 "@
 
-# ã‚­ãƒƒãƒ†ã‚£ãƒ³ã‚°å®Œäº†ã‚’ãƒãƒ£ãƒƒãƒˆã«é€šçŸ¥
+# ƒLƒbƒeƒBƒ“ƒOŠ®—¹‚ğƒ`ƒƒƒbƒg‚É’Ê’m
 Send-Chat $compliteMsg $config.notifier.chat $config.notifier.url $config.notifier.token
 
-# ãƒ­ã‚°å‡ºåŠ›çµ‚äº†
+# ƒƒOo—ÍI—¹
 Stop-Transcript
