@@ -152,15 +152,25 @@ function Remove-Task($TaskName) {
 # 自動でWindowsアップデートを最新まで実行
 ################################################
 function Run-WindowsUpdate() {
-    $updates = Start-WUScan
+    $errorMsg = ""
+    $errorCount = 0
+    $updates = Start-WUScan -SearchCriteria "IsInstalled=0 AND IsHidden=0 AND IsAssigned=1"
 
     # 利用可能な更新プログラムが0件になるまで繰り返す
-    while ($updates.Count -ne 0) {
+    while (($updates.Count -ne 0) -And ($errorCount -lt 2)) {
     Write-Host "$(Date -Format g) $($updates.Count)件の更新プログラムが利用可能"
 
     foreach ($update in $updates) {
         Write-Host "$(Date -Format g) $($update.Title)"
-        Install-WUUpdates -Updates $update -ErrorAction SilentlyContinue
+        try {
+            Install-WUUpdates -Updates $update -ErrorAction Stop
+        }
+        catch {
+            $errorCount++
+            Write-Error $_.Exception
+            Write-Host "$(Date -Format g) [Error $($errorCount)] $($update.Title)" -ForegroundColor Yellow
+            $errorMsg = $errorMsg + "$(Date -Format g) [更新プログラムのインストールに失敗] $($update.Title)`r`n"
+        }
     }
 
     if (Get-WUIsPendingReboot) {
@@ -173,6 +183,12 @@ function Run-WindowsUpdate() {
     Write-Host "$(Date -Format g) 更新プログラムを再チェック"
     $updates = Start-WUScan
 
+    }
+
+    if ($errorCount -eq 2) {
+        return $errorMsg
+    }else {
+        return "Windows Update 完了"
     }
 
 }
