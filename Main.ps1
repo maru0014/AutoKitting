@@ -104,6 +104,16 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
     Set-NetTCPSetting -AutoTuningLevelLocal Disabled
   }
 
+  # 電源設定ファイルのインポート
+  if ($config.importPowFile -ne "") {
+    Write-Host "電源設定ファイルをインポート： $($PSScriptRoot)$($config.importPowFile)"
+    $powercfgResult = cmd /C powercfg /import "$($PSScriptRoot)$($config.importPowFile)"
+    Write-Host $powercfgResult
+    $guid = $powercfgResult -replace '.+: ', ''
+    Write-Host $guid
+    cmd /C powercfg /setactive $guid
+  }
+
   # スリープ無効化
   if ($config.desableSleep) {
     Write-Host "$(Get-Date -Format g) スリープ無効化"
