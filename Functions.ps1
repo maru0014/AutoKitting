@@ -11,11 +11,11 @@ function Join-Domain($domainName, $userName, $userPass, $ouPath) {
     $cred = New-Object System.Management.Automation.PSCredential($userName, $pwd)
 
     if ($ouPath -ne "") {
-    Write-Host "OU : $($ouPath)" -ForeGroundColor Yellow
-      return (Add-Computer -DomainName $domainName -OUPath $ouPath -Credential $cred -ErrorAction stop)
+        Write-Host "OU : $($ouPath)" -ForeGroundColor Yellow
+        return (Add-Computer -DomainName $domainName -OUPath $ouPath -Credential $cred -ErrorAction stop)
     }
     else {
-      return (Add-Computer -DomainName $domainName -Credential $cred -ErrorAction stop)
+        return (Add-Computer -DomainName $domainName -Credential $cred -ErrorAction stop)
     }
 }
 
@@ -48,7 +48,7 @@ function Enable-AutoLogon($LogonUser, $LogonPass, $LogonDomain) {
     $AutoAdminLogon = Get-Registry "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "AutoAdminLogon"
     $DefaultUsername = Get-Registry "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "DefaultUsername"
     if (($AutoAdminLogon -ne 1) -Or ($DefaultUsername -ne $LogonUser)) {
-        Write-Host "$(Date -Format g) ユーザー$($LogonUser)の自動ログオンを有効化"
+        Write-Host "$(Get-Date -Format g) ユーザー$($LogonUser)の自動ログオンを有効化"
         $RegLogonKey = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
         Set-ItemProperty -path $RegLogonKey -name "AutoAdminLogon" -value 1
         Set-ItemProperty -path $RegLogonKey -name "DefaultUsername" -value $LogonUser
@@ -121,7 +121,7 @@ function Test-Task($TaskName) {
 ################################################
 function Register-Task($TaskName, $exePath, $TaskExecuteUser, $TaskExecutePass, $visble) {
     if (-not (Test-Task $TaskName)) {
-        Write-Host "$(Date -Format g) タスクスケジューラに登録:$($TaskName)"
+        Write-Host "$(Get-Date -Format g) タスクスケジューラに登録:$($TaskName)"
         $trigger = New-ScheduledTaskTrigger -AtLogon
         $action = New-ScheduledTaskAction -Execute $exePath
         $principal = New-ScheduledTaskPrincipal -UserID $TaskExecuteUser -LogonType ServiceAccount -RunLevel Highest
@@ -143,7 +143,7 @@ function Remove-Task($TaskName) {
         Get-ScheduledTask | Where-Object { $_.TaskName -match $TaskName } | Unregister-ScheduledTask -Confirm:$false
     }
 
-    Write-Output "$(Date -Format g) $($TaskName)をタスクスケジューラから削除"
+    Write-Output "$(Get-Date -Format g) $($TaskName)をタスクスケジューラから削除"
 
 }
 
@@ -151,43 +151,44 @@ function Remove-Task($TaskName) {
 ################################################
 # 自動でWindowsアップデートを最新まで実行
 ################################################
-function Run-WindowsUpdate() {
+function Start-WindowsUpdate() {
     $errorMsg = ""
     $errorCount = 0
     $updates = Start-WUScan -SearchCriteria "IsInstalled=0 AND IsHidden=0 AND IsAssigned=1"
 
     # 利用可能な更新プログラムが0件になるまで繰り返す
     while (($updates.Count -ne 0) -And ($errorCount -lt 2)) {
-    Write-Host "$(Date -Format g) $($updates.Count)件の更新プログラムが利用可能"
+        Write-Host "$(Get-Date -Format g) $($updates.Count)件の更新プログラムが利用可能"
 
-    foreach ($update in $updates) {
-        Write-Host "$(Date -Format g) $($update.Title)"
-        try {
-            Install-WUUpdates -Updates $update -ErrorAction Stop
+        foreach ($update in $updates) {
+            Write-Host "$(Get-Date -Format g) $($update.Title)"
+            try {
+                Install-WUUpdates -Updates $update -ErrorAction Stop
+            }
+            catch {
+                $errorCount++
+                Write-Error $_.Exception
+                Write-Host "$(Get-Date -Format g) [Error $($errorCount)] $($update.Title)" -ForegroundColor Yellow
+                $errorMsg = $errorMsg + "$(Get-Date -Format g) [更新プログラムのインストールに失敗] $($update.Title)`r`n"
+            }
         }
-        catch {
-            $errorCount++
-            Write-Error $_.Exception
-            Write-Host "$(Date -Format g) [Error $($errorCount)] $($update.Title)" -ForegroundColor Yellow
-            $errorMsg = $errorMsg + "$(Date -Format g) [更新プログラムのインストールに失敗] $($update.Title)`r`n"
+
+        if (Get-WUIsPendingReboot) {
+            # 再起動が必要な場合は再起動
+            Write-Host "$(Get-Date -Format g) 更新を完了するため再起動します"
+            Restart-Computer -Force
+            Exit
         }
-    }
 
-    if (Get-WUIsPendingReboot) {
-        # 再起動が必要な場合は再起動
-        Write-Host "$(Date -Format g) 更新を完了するため再起動します"
-        Restart-Computer -Force
-        Exit
-    }
-
-    Write-Host "$(Date -Format g) 更新プログラムを再チェック"
-    $updates = Start-WUScan
+        Write-Host "$(Get-Date -Format g) 更新プログラムを再チェック"
+        $updates = Start-WUScan
 
     }
 
     if ($errorCount -eq 2) {
         return $errorMsg
-    }else {
+    }
+    else {
         return "Windows Update 完了"
     }
 
@@ -202,7 +203,7 @@ function Send-Chat($msg, $chat, $url, $token) {
     $utf8Bytes = [System.Text.Encoding]::UTF8.GetBytes($msg)
 
     if ($chat -eq "slack") {
-        $notificationPayload = @{text = $enc.GetString($utf8Bytes)}
+        $notificationPayload = @{text = $enc.GetString($utf8Bytes) }
         Invoke-RestMethod -Uri $url -Method Post -Body (ConvertTo-Json $notificationPayload)
     }
     elseif ($chat -eq "chatwork") {
@@ -210,12 +211,12 @@ function Send-Chat($msg, $chat, $url, $token) {
         Invoke-RestMethod -Uri $url -Method POST -Headers @{"X-ChatWorkToken" = $token } -Body "body=$body"
     }
     elseif ($chat -eq "teams") {
-        $body = ConvertTo-JSON @{text = $msg}
+        $body = ConvertTo-JSON @{text = $msg }
         $postBody = [Text.Encoding]::UTF8.GetBytes($body)
         Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json' -Body $postBody
     }
     elseif ($chat -eq "hangouts") {
-        $notificationPayload = @{text = $msg}
+        $notificationPayload = @{text = $msg }
         Invoke-RestMethod -Uri $url -Method Post -ContentType 'application/json; charset=UTF-8' -Body (ConvertTo-Json $notificationPayload)
     }
 }
@@ -235,7 +236,7 @@ function Get-Registry( $RegPath, $RegKey ) {
     $Result = Get-ItemProperty $RegPath -name $RegKey -ErrorAction SilentlyContinue
 
     # キーがあった時
-    if ( $Result -ne $null ) {
+    if ( $null -ne $Result ) {
         return $Result.$RegKey
     }
     # キーが無かった時
@@ -262,7 +263,7 @@ function Set-Registry( $Path, $Key, $Type, $Value ) {
         }
         $Path += $Element
         if ( -not (test-path $Path) ) {
-            Write-Output "$(Date -Format g) [Add Registry] : $Path"
+            Write-Output "$(Get-Date -Format g) [Add Registry] : $Path"
             mkdir $Path
         }
     }
@@ -271,13 +272,13 @@ function Set-Registry( $Path, $Key, $Type, $Value ) {
     $Result = Get-ItemProperty $Path -name $Key -ErrorAction SilentlyContinue
     # キーがあった時
     if ( $null -ne $Result ) {
-        Write-Host "$(Date -Format g) [Update Registry Value] $Path $Key $Value"
+        Write-Host "$(Get-Date -Format g) [Update Registry Value] $Path $Key $Value"
         Set-ItemProperty $Path -name $Key -Value $Value
     }
     # キーが無かった時
     else {
         # キーを追加する
-        Write-Host "$(Date -Format g) [Add Registry Value] $Path $Key $Value"
+        Write-Host "$(Get-Date -Format g) [Add Registry Value] $Path $Key $Value"
         New-ItemProperty $Path -name $Key -PropertyType $Type -Value $Value
     }
     Get-ItemProperty $Path -name $Key
@@ -402,7 +403,7 @@ function Test-MemberDomainAccunt( $DomainName, $DomainUser, $LocalGroupName ) {
         return $LocalGroup.IsMember($ADUser.ADsPath)
     }
     else {
-        Write-Host "$(Date -Format g) ローカルグループ $LocalGroupName が見つかりません"
+        Write-Host "$(Get-Date -Format g) ローカルグループ $LocalGroupName が見つかりません"
         return $false
     }
 }
@@ -513,13 +514,13 @@ function Join-Group2( $UserID, $JoinGroup ) {
 function Enable-SaveRecoveryPassInAD {
     $RegPath = "HKLM:\SOFTWARE\Policies\Microsoft\FVE"
     if ((Get-Registry $RegPath "ActiveDirectoryBackup") -ne 1) {
-      Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
+        Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
     }
     if ((Get-Registry $RegPath "ActiveDirectoryInfoToStore") -ne 1) {
-      Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
+        Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
     }
     if ((Get-Registry $RegPath "RequireActiveDirectoryBackup") -ne 1) {
-      Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
+        Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
     }
 }
 
@@ -533,27 +534,27 @@ function Enable-StartupPin {
 
     # スタートアップ時に追加の認証を要求する
     if ((Get-Registry $RegPath "EnableBDEWithNoTPM") -ne 1) {
-      Set-Registry $RegPath "EnableBDEWithNoTPM" "DWord" 1
+        Set-Registry $RegPath "EnableBDEWithNoTPM" "DWord" 1
     }
     if ((Get-Registry $RegPath "UseAdvancedStartup") -ne 1) {
-      Set-Registry $RegPath "UseAdvancedStartup" "DWord" 1
+        Set-Registry $RegPath "UseAdvancedStartup" "DWord" 1
     }
     if ((Get-Registry $RegPath "UseTPM") -ne 2) {
-      Set-Registry $RegPath "UseTPM" "DWord" 2
+        Set-Registry $RegPath "UseTPM" "DWord" 2
     }
     if ((Get-Registry $RegPath "UseTPMKey") -ne 2) {
-      Set-Registry $RegPath "UseTPMKey" "DWord" 2
+        Set-Registry $RegPath "UseTPMKey" "DWord" 2
     }
     if ((Get-Registry $RegPath "UseTPMKeyPIN") -ne 2) {
-      Set-Registry $RegPath "UseTPMKeyPIN" "DWord" 2
+        Set-Registry $RegPath "UseTPMKeyPIN" "DWord" 2
     }
     if ((Get-Registry $RegPath "UseTPMPIN") -ne 2) {
-      Set-Registry $RegPath "UseTPMPIN" "DWord" 2
+        Set-Registry $RegPath "UseTPMPIN" "DWord" 2
     }
 
     # スタートアップの拡張 PIN を許可する
     if ((Get-Registry $RegPath "UseEnhancedPin") -ne 1) {
-      Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
+        Set-Registry $RegPath "UseEnhancedPin" "DWord" 1
     }
 }
 
@@ -582,16 +583,16 @@ function Add-NetworkDrive($driveLetter, $drivePath, $userName, $userPass) {
 # key.txt と encryptedtxt ファイルからパスワードを復号化
 ################################################
 function Decryption-Password($keyFilePath, $encryptedFilePath ) {
-  # 暗号化で使用したバイト配列を用意
-  [byte[]] $EncryptedKey = Get-Content $keyFilePath
+    # 暗号化で使用したバイト配列を用意
+    [byte[]] $EncryptedKey = Get-Content $keyFilePath
 
-  # 暗号化された標準文字列をインポートしてSecureStringに変換
-  $importSecureString = Get-Content $encryptedFilePath | ConvertTo-SecureString -key $EncryptedKey
+    # 暗号化された標準文字列をインポートしてSecureStringに変換
+    $importSecureString = Get-Content $encryptedFilePath | ConvertTo-SecureString -key $EncryptedKey
 
-  # SecureStringから文字列を取り出すおまじない
-  $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($importSecureString)
-  $StringPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
-  return $StringPassword
+    # SecureStringから文字列を取り出すおまじない
+    $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($importSecureString)
+    $StringPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+    return $StringPassword
 }
 
 
@@ -599,6 +600,6 @@ function Decryption-Password($keyFilePath, $encryptedFilePath ) {
 # Pause 機能追加
 ################################################
 function Pause() {
-  Write-Host "続行するには何かキーを押してください..." -NoNewLine
-  [Console]::ReadKey() | Out-Null
+    Write-Host "続行するには何かキーを押してください..." -NoNewLine
+    [Console]::ReadKey() | Out-Null
 }
