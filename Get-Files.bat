@@ -6,7 +6,7 @@ set Source="\\NAS\share\AutoKitting"
 echo *********************注意事項*********************
 echo ・管理者権限が必要です
 echo ・BIOSパスワードやHDDパスワードは事前に解除してください
-echo ・C:\AutoKittingフォルダ取得済みの場合は Run-PS.bat を直接実行してください
+echo ・C:\AutoKittingフォルダ取得済みの場合は Start-AutoKitting.bat を直接実行してください
 echo **************************************************
 
 set USRNAME=
