@@ -6,8 +6,8 @@ Write-Host @"
 *********************************************************
 *
 * Windows10 Auto Kitting Script / Main.ps1
-* バージョン : 1.04
-* 最終更新日 : 2020/05/21
+* バージョン : 1.06
+* 最終更新日 : 2020/09/04
 *
 "@ -ForeGroundColor green
 
@@ -132,7 +132,7 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
 
 if ($config.upgradeWindows) {
   $winver = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ReleaseId).ReleaseId
-  if ($winver -ne "1909") {
+  if (1909 -gt $winver) {
     # Win10 1909をインストール
     Write-Host "$(Get-Date -Format g) Windows10 $($winver) → 1909アップグレード実行"
     Start-Process -FilePath ($PSScriptRoot + "/Applications/1909/setup.exe") -argumentList "/Auto Upgrade" -Wait
