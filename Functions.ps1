@@ -196,6 +196,126 @@ function Start-WindowsUpdate() {
 
 
 ################################################
+# 自動でWindowsアップデートを最新まで実行(レガシー)
+################################################
+function Run-LegacyWindowsUpdate($Option) {
+
+    # 最大適用更新数
+    $G_MaxUpdateNumber = 100
+
+    Write-Host "$(Get-Date -Format g) --- Running Windows Update ---"
+    Write-Host "$(Get-Date -Format g) 更新プログラムを確認..."
+    $updateSession = new-object -com "Microsoft.Update.Session"
+    $updateSearcher = $updateSession.CreateupdateSearcher()
+
+    # アップデートタイプコントロール
+    if ( $Option -match "ful" ) {
+        Write-Host "$(Get-Date -Format g) Type: Full Update"
+        $Option = "Full"
+        $searchResult = $updateSearcher.Search("IsInstalled=0 and Type='Software'")
+    }
+    else {
+        Write-Host "$(Get-Date -Format g) Type: Minimum Update"
+        $Option = "Minimum"
+        $searchResult = $updateSearcher.Search("IsInstalled=0 and Type='Software' and AutoSelectOnWebSites=1")
+    }
+
+
+    Write-Host "$(Get-Date -Format g) 利用可能な更新プログラム:"
+    if ($searchResult.Updates.Count -eq 0) {
+        Write-Host "$(Get-Date -Format g) 利用可能な更新プログラムはありません"
+        Write-Host "$(Get-Date -Format g) Windows Update 完了"
+    }
+    else {
+        $downloadReq = $False
+        $i = 0
+        foreach ($update in $searchResult.Updates) {
+            $i++
+            if ( $update.IsDownloaded ) {
+                $UpdateTitol = $update.Title
+                Write-Host "$(Get-Date -Format g) $i : $UpdateTitol (downloaded)"
+            }
+            else {
+                $downloadReq = $true
+                $UpdateTitol = $update.Title
+                Write-Host "$(Get-Date -Format g) $i : $UpdateTitol (not downloaded)"
+            }
+        }
+        if ( $downloadReq ) {
+            Write-Host "$(Get-Date -Format g) ダウンロードリストを作成..."
+            $updatesToDownload = new-object -com "Microsoft.Update.UpdateColl"
+            foreach ($update in $searchResult.Updates) {
+                $updatesToDownload.Add($update) | out-null
+            }
+            Write-Host "$(Get-Date -Format g) ダウンロード..."
+            $downloader = $updateSession.CreateUpdateDownloader()
+            $downloader.Updates = $updatesToDownload
+            $downloader.Download()
+            Write-Host "$(Get-Date -Format g) ダウンロード済み:"
+            $i = 0
+            foreach ($update in $searchResult.Updates) {
+                $i++
+                if ( $update.IsDownloaded ) {
+                    $UpdateTitol = $update.Title
+                    Write-Host "$(Get-Date -Format g) $i : $UpdateTitol (downloaded)"
+                }
+                else {
+                    $UpdateTitol = $update.Title
+                    Write-Host "$(Get-Date -Format g) $i : $UpdateTitol (not downloaded)"
+                }
+            }
+        }
+        else {
+            Write-Host "$(Get-Date -Format g) 全ての更新プログラムをダウンロードしました"
+        }
+        $updatesToInstall = new-object -com "Microsoft.Update.UpdateColl"
+        Write-Host "$(Get-Date -Format g) インストールリストを作成..."
+        $i = 0
+        foreach ($update in $searchResult.Updates) {
+            if ( $update.IsDownloaded ) {
+                $updatesToInstall.Add($update) | out-null
+                $i++
+                $UpdateTitol = $update.Title
+                Write-Host "$(Get-Date -Format g) $i / $G_MaxUpdateNumber : $UpdateTitol (Install)"
+                if ( $i -ge $G_MaxUpdateNumber ) {
+                    Write-Host "$(Get-Date -Format g) 更新数の上限： $G_MaxUpdateNumber"
+                    break
+                }
+            }
+        }
+        if ( $updatesToInstall.Count -eq 0 ) {
+            Write-Host "$(Get-Date -Format g) インストールの準備ができていません"
+            Write-Host "$(Get-Date -Format g) 異常終了"
+        }
+        else {
+            $InstallCount = $updatesToInstall.Count
+            Write-Host "$(Get-Date -Format g) $InstallCount 件のアップデート..."
+            $installer = $updateSession.CreateUpdateInstaller()
+            $installer.Updates = $updatesToInstall
+            $installationResult = $installer.Install()
+            if ( $installationResult.ResultCode -eq 2 ) {
+                Write-Host "$(Get-Date -Format g) 全ての更新プログラムをインストール完了"
+            }
+            else {
+                Write-Host "$(Get-Date -Format g) 一部の更新プログラムをインストール出来ませんでした"
+            }
+            if ( $installationResult.RebootRequired ) {
+                Write-Host "$(Get-Date -Format g) 一つ以上のアップデートで再起動が必要です 10秒後に再起動します"
+                Start-Sleep 10
+                Restart-Computer -Force
+            }
+            else {
+                Write-Host "$(Get-Date -Format g) Windows Update を完了しました。再起動は必要ありません。"
+                Write-Host "$(Get-Date -Format g) =-=-=-=-=- Windows Update finished -=-=-=-=-="
+            }
+        }
+    }
+
+
+}
+
+
+################################################
 # チャット送信
 ################################################
 function Send-Chat($msg, $chat, $url, $token) {
