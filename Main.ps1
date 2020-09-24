@@ -383,12 +383,20 @@ if ($config.bitlocker.flag -And $EncryptedFlag) {
     }
   }
 
+  # 回復パスワードを設定
+  Add-BitLockerKeyProtector -MountPoint "C:" -RecoveryPasswordProtector
+
+  # TpmProtectorが存在しない場合は作成
+  $TpmKP = $BLV.KeyProtector | Where-Object { $_.KeyProtectorType -eq 'Tpm' }
+  if (-Not $TpmKP) {
+    Add-BitLockerKeyProtector -MountPoint "C:" -TpmProtector
+  }
+
   if ($config.bitLocker.saveRecoveryPassInAD) {
+
     # ADへの回復パスワード保存を有効化
     Enable-SaveRecoveryPassInAD
 
-    # 回復パスワードを設定
-    Add-BitLockerKeyProtector -MountPoint "C:" -RecoveryPasswordProtector
     $kpid = ((Get-BitLockerVolume -MountPoint "C:").keyProtector | Where-Object { $_.KeyProtectorType -eq 'RecoveryPassword' }).KeyProtectorId
 
     # ADに回復パスワードを保存
