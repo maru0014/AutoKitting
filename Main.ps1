@@ -6,8 +6,8 @@ Write-Host @"
 *********************************************************
 *
 * Windows10 Auto Kitting Script / Main.ps1
-* バージョン : 1.06
-* 最終更新日 : 2020/09/04
+* バージョン : 1.20
+* 最終更新日 : 2020/10/22
 *
 "@ -ForeGroundColor green
 
@@ -130,18 +130,35 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
   # dism /online /Enable-Feature /FeatureName:NetFx3
 }
 
-if ($config.upgradeWindows) {
+if ($config.upgradeWindows.flag) {
   $winver = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ReleaseId).ReleaseId
-  if (1909 -gt $winver) {
-    # Win10 1909をインストール
-    Write-Host "$(Get-Date -Format g) Windows10 $($winver) → 1909アップグレード実行"
-    Start-Process -FilePath ($PSScriptRoot + "/Applications/1909/setup.exe") -argumentList "/Auto Upgrade" -Wait
+  if ($config.upgradeWindows.ver -gt $winver) {
+    Write-Host "`r`n***************** Windows 10 更新アシスタント実行 *****************" -ForeGroundColor green
+    $dir = 'C:\AutoWinUpdate\_Windows_FU\packages'
+    if (-not (Test-Path $dir)) {
+      # 作業用フォルダ作成
+      mkdir $dir
+
+      # Window10更新アシスタントをダウンロード
+      $webClient = New-Object System.Net.WebClient
+      $url = 'https://go.microsoft.com/fwlink/?LinkID=799445'
+      $file = "$($dir)\Win10Upgrade.exe"
+      $webClient.DownloadFile($url, $file)
+
+      # サイレントインストール
+      Start-Process -FilePath $file -ArgumentList '/skipeula /auto upgrade /UninstallUponUpgrade' -Wait
+      Exit
+    }
   }
 }
 
-
 Write-Host "`r`n***************** 最新までWindows Update *****************" -ForeGroundColor green
-Run-LegacyWindowsUpdate "Full"
+if(-not (Get-Module -ListAvailable -Name PSWindowsUpdate)){
+  Install-PackageProvider -Name NuGet -Force
+  Install-Module -Name PSWindowsUpdate -Force
+}
+Import-Module -Name PSWindowsUpdate
+Install-WindowsUpdate -AcceptAll -AutoReboot
 
 
 Write-Host "`r`n************* アプリケーションのインストール *************" -ForeGroundColor green

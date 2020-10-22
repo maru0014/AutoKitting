@@ -12,7 +12,10 @@
     "defaultAppAssoc": true,
     "deleteTaskbarUWPApps": true,
     "runUninstallApps": true,
-    "upgradeWindows": true,
+    "upgradeWindows": {
+      "flag": true,
+      "ver": 2004
+    },
     "domain": {
       "name": "codelife",
       "address": "codelife.cafe"
