@@ -5,8 +5,8 @@
     "enableAdministrator": true,
     "enableRemoteDesktop": true,
     "disableWinDefender": true,
-    "desableSleep": true,
-    "desableHibernate": true,
+    "disableSleep": true,
+    "disableHibernate": true,
     "importPowFile": "/export.pow",
     "defaultDesktop": true,
     "defaultAppAssoc": true,
@@ -26,7 +26,7 @@
       "saveRecoveryPassInAD": true
     },
     "network": {
-      "desableSnp": true,
+      "disableSnp": true,
       "disableIPv6": true,
       "staticIP": {
         "flag": false,

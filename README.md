@@ -128,8 +128,8 @@ PC 名、セットアップに利用するアカウント情報、ネットワ�
     "enableAdministrator": true, //Administratorを有効化
     "enableRemoteDesktop": true, //リモートデスクトップを有効化
     "disableWinDefender": true, //Windows Defenderを無効化
-    "desableSleep": true, //スリープを無効化する
-    "desableHibernate": true, //休止状態を無効化する
+    "disableSleep": true, //スリープを無効化する
+    "disableHibernate": true, //休止状態を無効化する
     "defaultDesktop": true, //Defaultユーザのデスクトップにコピー
     "defaultAppAssoc": true, //既定のアプリを設定
     "deleteTaskbarUWPApps": false, //タスクバーのアイコンを削除
@@ -143,9 +143,8 @@ PC 名、セットアップに利用するアカウント情報、ネットワ�
       "flag": true, //BitLocker を有効化
       "password": "Setup1234", //BitLockerの拡張pin
       "saveRecoveryPassInAD": true //回復パスワードをADに保管する（AD側に管理機能を追加する必要あり）
-    },
-    "network": {
-      "desableSnp": true, //SNPを無効化する
+    },    "network": {
+      "disableSnp": true, //SNPを無効化する
       "disableIPv6": true, //IPv6を無効化する
       "staticIP": {
         "flag": false, //固定IPの設定
@@ -153,7 +152,7 @@ PC 名、セットアップに利用するアカウント情報、ネットワ�
         "gateway": "", //デフォルトゲートウェイ
         "prefixLength": 24 //サブネットマスク
       },
-      "dns": ["192.168.1.100", "192.168.1.1", "8.8.8.8", "8.8.4.4"], //1つ目：優先、2つ目：代替、3つ目移行は詳細設定内にセットされる
+      "dns": ["192.168.1.100", "192.168.1.1", "8.8.8.8", "8.8.4.4"], //1つ目：優先、2つ目：代替、3つ目以降は詳細設定内にセットされる
       "dnsSuffix": ["dc.codelife.cafe"], //DNSサフィックス設定（カンマ区切りで複数可）
       "drive": [
         //マウントするネットワークドライブ設定（カンマ区切りで複数可）
