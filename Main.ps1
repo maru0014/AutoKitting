@@ -34,16 +34,16 @@ else {
 Write-Host "`r`n********************** 設定値確認 ***********************" -ForeGroundColor green
 Write-Host @"
 コンピュータ名　　　: $($pcname)
-セットアップユーザ　: $($config.setupuser.name)
+セットアップユーザ　: $($config.setupUser.name)
 ドメイン参加　　　　: $($config.joinDomain)
 Administrator有効化 : $($config.enableAdministrator)
 BitLocker有効化 　　: $($config.bitLocker.flag)
 RDP有効化 　　　　　: $($config.enableRemoteDesktop)
 Defender無効化　　　: $($config.disableWinDefender)
-スリープ無効化　　　: $($config.desableSleep)
-休止状態無効化　　　: $($config.desableHibernate)
+スリープ無効化　　　: $($config.disableSleep)
+休止状態無効化　　　: $($config.disableHibernate)
 IPアドレス固定　　　: $($config.network.staticIP.flag)
-SNP無効化 　　　　　: $($config.network.desableSnp)
+SNP無効化 　　　　　: $($config.network.disableSnp)
 IPv6無効化　　　　　: $($config.network.disableIPv6)
 
 インストールするアプリケーション :
@@ -57,10 +57,10 @@ foreach ($app in $config.apps) {
 Write-Host "`r`n******************* システム情報の変更 *******************" -ForeGroundColor green
 
 # 自動ログオン未設定の場合は設定する
-Enable-AutoLogon $config.setupuser.name $config.setupuser.pass
+Enable-AutoLogon $config.setupUser.name $config.setupUser.pass
 
 # タスクが未登録ならスケジューラにログオンスクリプトを登録
-Register-Task "AutoKitting" "$PSScriptRoot\Run-PS.bat" $config.setupuser.name $config.setupuser.pass
+Register-Task "AutoKitting" "$PSScriptRoot\Run-PS.bat" $config.setupUser.name $config.setupUser.pass
 
 # コンピュータ名が設定値と異なる場合は変更
 if ($Env:COMPUTERNAME -ne $pcname) {
@@ -89,17 +89,16 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
     Write-Host "$(Get-Date -Format g) リモートデスクトップ無効化"
     Set-Registry "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" "fDenyTSConnections" "DWord" 1
   }
-
   # Windows Defender無効化
   $DefenderStatus = Get-Registry "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "DisableAntiSpyware"
-  if ($config.desableDefender -and ($DefenderStatus -ne 1)) {
+  if ($config.disableDefender -and ($DefenderStatus -ne 1)) {
     Write-Host "$(Get-Date -Format g) Windows Defender無効化"
     Set-Registry "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "DisableAntiSpyware" "DWord" 1
   }
 
   # SNP無効化
   ((Get-NetTCPSetting).AutoTuningLevelLocal).Contains("Disabled")
-  if ($config.network.desableSnp) {
+  if ($config.network.disableSnp) {
     Write-Host "$(Get-Date -Format g) SNP無効化"
     Set-NetTCPSetting -AutoTuningLevelLocal Disabled
   }
@@ -113,15 +112,14 @@ if (-Not (Test-Path "$PSScriptRoot/onlyOnce1")) {
     Write-Host $guid
     cmd /C powercfg /setactive $guid
   }
-
   # スリープ無効化
-  if ($config.desableSleep) {
+  if ($config.disableSleep) {
     Write-Host "$(Get-Date -Format g) スリープ無効化"
     powercfg /x /standby-timeout-ac 0
   }
 
   # 休止状態無効化
-  if ($config.desableHibernate) {
+  if ($config.disableHibernate) {
     Write-Host "$(Get-Date -Format g) 休止状態無効化"
     powercfg /x /hibernate-timeout-ac 0
   }
@@ -340,7 +338,7 @@ if ($config.joinDomain -And ($config.domain.address -ne (Get-WmiObject Win32_Com
 
 
 # 作成したユーザで自動ログオン設定
-if ($env:USERNAME -eq $config.setupuser.name) {
+if ($env:USERNAME -eq $config.setupUser.name) {
   Write-Host "`r`n************* 利用者ユーザで自動ログオン設定 *************" -ForeGroundColor green
   Write-Host "$(Get-Date -Format g) セットアップユーザのログオンスクリプトを解除"
   Remove-Task "AutoKitting"
@@ -459,13 +457,12 @@ if (-Not ($config.domainUser.localGroup).Contains("Administrators")) {
 
 if ($config.setupUser.delete) {
   Write-Host "`r`n**************** セットアップユーザの削除 ****************" -ForeGroundColor green
-
   # ユーザ削除
-  Write-Host "$(Get-Date -Format g) $($config.setupuser.name)を削除"
-  Remove-LocalUser -Name $config.setupuser.name
+  Write-Host "$(Get-Date -Format g) $($config.setupUser.name)を削除"
+  Remove-LocalUser -Name $config.setupUser.name
 
   # ユーザプロファイル削除
-  $GetUserQuery = 'select * from win32_userprofile where LocalPath="C:\\Users\\' + $config.setupuser.name + '"'
+  $GetUserQuery = 'select * from win32_userprofile where LocalPath="C:\\Users\\' + $config.setupUser.name + '"'
   Get-WmiObject -Query $GetUserQuery | Remove-WmiObject
 }
 
@@ -497,7 +494,7 @@ $serialNo = (Get-WmiObject Win32_ComputerSystemProduct).IdentifyingNumber | Out-
 # MACアドレス取得
 $macAddress = Get-NetAdapter | ForEach-Object { "`r`n$($_.Name) : $($_.MacAddress)" }
 
-$compliteMsg = @"
+$completeMsg = @"
 [$($pcname)] キッティング完了！
 シリアル番号： $($serialNo)
 MACアドレス： $($macAddress)
@@ -505,7 +502,7 @@ MACアドレス： $($macAddress)
 "@
 
 # キッティング完了をチャットに通知
-Send-Chat $compliteMsg $config.notifier.chat $config.notifier.url $config.notifier.token
+Send-Chat $completeMsg $config.notifier.chat $config.notifier.url $config.notifier.token
 
 # ログ出力終了
 Stop-Transcript

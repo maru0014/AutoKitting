@@ -84,11 +84,9 @@ function Disable-AutoLogon() {
 function Test-Task($TaskName) {
     <#
     .SYNOPSIS
-    タスクの存在チェック
-
-    .DESCRIPTION
+    タスクの存在チェック    .DESCRIPTION
     タスク名を受け取ってタスクスケジューラ内に存在するかチェック
-    存在する場合は%true、存在しない場合は$falseを返します
+    存在する場合は$true、存在しない場合は$falseを返します
 
     .EXAMPLE
     Test-Task "自動ログオン"
